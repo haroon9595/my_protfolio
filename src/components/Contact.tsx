@@ -50,15 +50,40 @@ export default function Contact() {
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/contact", {
+      const accessKey =
+        process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
+        "f337203f-d815-48ae-b706-4078771fdb03";
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+          subject: `Portfolio Inquiry from ${formData.name.trim()}`,
+          from_name: "Muhammad Haroon Rashid Portfolio",
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(
+          data.message || "Failed to send message. Please try again."
+        );
+      }
+
+      // Also notify internal API / n8n in background if configured
+      fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to send message. Please try again.");
-      }
+      }).catch(() => {});
 
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
