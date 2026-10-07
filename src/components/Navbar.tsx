@@ -140,10 +140,18 @@ export default function Navbar() {
                 <ArrowUpRight size={14} className="text-zinc-400" />
               </Link>
             ))}
+            <a
+              href={portfolioData.personal.cvPath}
+              download="Muhammad_Haroon_Rashid_CV.pdf"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center py-2.5 rounded-full text-sm font-semibold text-[#7C3AED] bg-white border border-[#7C3AED] hover:bg-purple-50 transition-colors"
+            >
+              Download CV
+            </a>
             <Link
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3 rounded-full text-sm font-semibold text-white bg-[#7C3AED] mt-2 shadow-md shadow-purple-500/20"
+              className="w-full text-center py-3 rounded-full text-sm font-semibold text-white bg-[#7C3AED] shadow-md shadow-purple-500/20"
             >
               Contact us
             </Link>

@@ -59,6 +59,7 @@ export const portfolioData = {
     linkedin: "https://linkedin.com/in/muhammadharoonrashid848777287",
     linkedinDisplay: "linkedin.com/in/muhammadharoonrashid848777287",
     cvPath: "/Muhammad_Haroon_Rashid_CV.pdf",
+    cvDriveUrl: "https://drive.google.com/file/d/1epvkm_BPC5EWDNnjKpO2U1uIQE_92r9i/view?usp=drive_link",
     profileImage:
       "https://res.cloudinary.com/drfnqdaqz/image/upload/v1791381225/Screenshot_2026-10-07_185319_qdodew.png",
     availabilityBadge: "Available for Hire",

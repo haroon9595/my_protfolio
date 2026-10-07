@@ -85,6 +85,12 @@ export async function POST(request: Request) {
       fallbackReply =
         "Haroon's core tech stack covers: Python, TypeScript, Next.js, React, Tailwind CSS, FastAPI, n8n automation, PostgreSQL, SQLite, Supabase, FastMCP / MCP servers, LangChain, Groq APIs, and FAISS vector databases.";
     } else if (
+      lower.includes("resume") ||
+      lower.includes("cv") ||
+      lower.includes("download")
+    ) {
+      fallbackReply = `You can download Haroon's verified Curriculum Vitae directly from the top banner, the About section, or via this direct link: ${portfolioData.personal.cvPath} (or view on Google Drive: ${portfolioData.personal.cvDriveUrl}).`;
+    } else if (
       lower.includes("contact") ||
       lower.includes("hire") ||
       lower.includes("email") ||

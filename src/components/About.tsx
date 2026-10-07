@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
-import { MapPin, Cpu, Languages, GraduationCap } from "lucide-react";
+import { MapPin, Cpu, Languages, GraduationCap, Download } from "lucide-react";
 
 export default function About() {
   const getIcon = (name: string) => {
@@ -54,6 +54,17 @@ export default function About() {
               <p className="text-base sm:text-lg text-zinc-600 leading-relaxed">
                 {portfolioData.about.paragraph2}
               </p>
+
+              <div className="pt-4">
+                <a
+                  href={portfolioData.personal.cvPath}
+                  download="Muhammad_Haroon_Rashid_CV.pdf"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-[#7C3AED] bg-white border border-[#7C3AED] hover:bg-purple-50 transition-all duration-200 shadow-xs hover:-translate-y-0.5"
+                >
+                  <Download size={15} />
+                  <span>Download Curriculum Vitae (PDF)</span>
+                </a>
+              </div>
             </div>
           </motion.div>
 
