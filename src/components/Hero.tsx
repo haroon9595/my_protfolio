@@ -104,7 +104,8 @@ export default function Hero() {
 
               <a
                 href={portfolioData.personal.cvPath}
-                download="Muhammad_Haroon_Rashid_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#7C3AED] bg-white border-2 border-[#7C3AED] hover:bg-purple-50 hover:-translate-y-0.5 transition-all duration-200 shadow-sm"
               >
                 <span>Download CV</span>

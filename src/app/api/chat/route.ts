@@ -90,7 +90,7 @@ export async function POST(request: Request) {
       lower.includes("cv") ||
       lower.includes("download")
     ) {
-      fallbackReply = `You can download Haroon's verified Curriculum Vitae directly from the top banner, the About section, or via this direct link: ${portfolioData.personal.cvPath} (or view on Google Drive: ${portfolioData.personal.cvDriveUrl}).`;
+      fallbackReply = `You can download Haroon's verified Curriculum Vitae directly from the top banner, About section, or via this direct link: ${portfolioData.personal.cvPath}`;
     } else if (
       lower.includes("contact") ||
       lower.includes("hire") ||

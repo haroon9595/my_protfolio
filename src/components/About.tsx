@@ -58,7 +58,8 @@ export default function About() {
               <div className="pt-4">
                 <a
                   href={portfolioData.personal.cvPath}
-                  download="Muhammad_Haroon_Rashid_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-[#7C3AED] bg-white border border-[#7C3AED] hover:bg-purple-50 transition-all duration-200 shadow-xs hover:-translate-y-0.5"
                 >
                   <Download size={15} />

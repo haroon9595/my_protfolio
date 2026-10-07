@@ -142,7 +142,8 @@ export default function Navbar() {
             ))}
             <a
               href={portfolioData.personal.cvPath}
-              download="Muhammad_Haroon_Rashid_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center py-2.5 rounded-full text-sm font-semibold text-[#7C3AED] bg-white border border-[#7C3AED] hover:bg-purple-50 transition-colors"
             >
