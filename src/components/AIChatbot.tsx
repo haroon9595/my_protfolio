@@ -73,59 +73,52 @@ export default function AIChatbot() {
       content: textToSend.trim(),
     };
 
+    // Maintain conversation history formatted for n8n AI Assistant
+    const conversationHistory = messages
+      .filter((m) => m.id !== "welcome")
+      .map((m) => ({
+        role: m.role,
+        content: m.content,
+      }));
+
     setMessages((prev) => [...prev, userMessage]);
     if (!messageText) setInput("");
     setIsLoading(true);
 
     try {
-      // Prioritize client webhook if configured directly, else use secure /api/chat proxy
-      const webhookUrl = process.env.NEXT_PUBLIC_N8N_CHAT_WEBHOOK;
-      let replyContent = "";
+      const webhookUrl =
+        process.env.NEXT_PUBLIC_N8N_CHAT_WEBHOOK ||
+        "https://haroonrashid.duckdns.org/webhook/haroon-ai-assistant";
 
-      if (webhookUrl) {
-        const response = await fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: userMessage.content,
-            history: messages.slice(-6).map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
-          }),
-        });
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: userMessage.content,
+          history: conversationHistory,
+        }),
+      });
 
-        if (response.ok) {
-          const data = await response.json();
-          replyContent =
-            data.output ||
-            data.reply ||
-            data.response ||
-            data.message ||
-            (typeof data === "string" ? data : JSON.stringify(data));
-        }
+      if (!response.ok) {
+        throw new Error(`n8n webhook returned status ${response.status}`);
       }
 
-      // If no reply yet, invoke /api/chat proxy
-      if (!replyContent) {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: userMessage.content,
-            history: messages.slice(-6).map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
-          }),
-        });
+      const data = await response.json();
+      const assistantAnswer =
+        data?.answer ||
+        data?.output ||
+        data?.reply ||
+        data?.response ||
+        data?.message;
 
-        if (res.ok) {
-          const data = await res.json();
-          replyContent = data.reply || "Message received.";
-        } else {
-          throw new Error("Unable to reach assistant.");
-        }
+      if (
+        !assistantAnswer ||
+        typeof assistantAnswer !== "string" ||
+        !assistantAnswer.trim()
+      ) {
+        throw new Error("Response did not contain an answer");
       }
 
       setMessages((prev) => [
@@ -133,17 +126,18 @@ export default function AIChatbot() {
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: replyContent,
+          content: assistantAnswer.trim(),
         },
       ]);
     } catch (err) {
+      console.error("n8n AI Assistant error:", err);
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
           content:
-            "Haroon's assistant is momentarily offline. Feel free to reach out directly via haroon11005@gmail.com or WhatsApp (+92 347 6379600).",
+            "Sorry, I'm having trouble connecting right now. Please try again or contact Haroon directly.",
         },
       ]);
     } finally {

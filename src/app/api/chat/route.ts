@@ -36,6 +36,7 @@ export async function POST(request: Request) {
         if (response.ok) {
           const data = await response.json();
           const reply =
+            data.answer ||
             data.output ||
             data.reply ||
             data.response ||
