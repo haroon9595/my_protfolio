@@ -15,7 +15,8 @@ export async function POST(request: Request) {
     // Optional webhook forwarding if NEXT_PUBLIC_N8N_CONTACT_WEBHOOK or N8N_WEBHOOK_URL is configured
     const webhookUrl =
       process.env.NEXT_PUBLIC_N8N_CONTACT_WEBHOOK ||
-      process.env.N8N_WEBHOOK_URL;
+      process.env.N8N_WEBHOOK_URL ||
+      "https://haroonrashid.duckdns.org/webhook/portfolio-contact";
 
     if (webhookUrl) {
       try {

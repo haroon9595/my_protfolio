@@ -50,40 +50,32 @@ export default function Contact() {
     setErrorMessage("");
 
     try {
-      const accessKey =
-        process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
-        "f337203f-d815-48ae-b706-4078771fdb03";
+      const webhookUrl =
+        process.env.NEXT_PUBLIC_N8N_CONTACT_WEBHOOK ||
+        "https://haroonrashid.duckdns.org/webhook/portfolio-contact";
 
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: accessKey,
           name: formData.name.trim(),
           email: formData.email.trim(),
           message: formData.message.trim(),
-          subject: `Portfolio Inquiry from ${formData.name.trim()}`,
-          from_name: "Muhammad Haroon Rashid Portfolio",
+          timestamp: new Date().toISOString(),
+          source: "Portfolio Contact Form",
         }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        throw new Error(
-          data.message || "Failed to send message. Please try again."
-        );
+      if (!res.ok) {
+        throw new Error("Failed to send message. Please try again.");
       }
 
-      // Also notify internal API / n8n in background if configured
-      fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      }).catch(() => {});
+      const data = await res.json().catch(() => null);
+      if (data && data.success === false) {
+        throw new Error(data.message || "Failed to send message. Please try again.");
+      }
 
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
