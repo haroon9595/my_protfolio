@@ -183,11 +183,39 @@ h1, h2, h3, h4, h5, h6 {
   animation: floatSlow2 5s ease-in-out infinite 0.6s;
 }
 
+@keyframes drawCenter {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.animate-draw-center {
+  animation: drawCenter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shakeError 0.4s ease-in-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bot-idle-wave,
   .float-slow-1,
-  .float-slow-2 {
+  .float-slow-2,
+  .animate-draw-center,
+  .animate-shake {
     animation: none !important;
     transform: none !important;
   }
 }
+

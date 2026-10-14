@@ -70,7 +70,7 @@ export default function Section({
           </p>
 
           <div
-            className="w-12 h-1 bg-purple-600 rounded-full mt-4"
+            className="w-12 h-1 bg-purple-600 rounded-full mt-4 origin-center animate-draw-center"
             aria-hidden="true"
           />
         </div>

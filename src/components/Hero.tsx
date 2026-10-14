@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
+import { heroContainer, heroItem } from "@/lib/motion";
 import TechIcon from "@/components/TechIcon";
 import {
   Download,
@@ -84,22 +85,25 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* Left Column: Bio & Calls to Action */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={heroContainer}
+            initial="hidden"
+            animate="visible"
             className="lg:col-span-7 space-y-5 text-left"
           >
             {/* Eyebrow badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-purple-700 text-xs font-semibold tracking-wide shadow-xs">
+            <motion.div
+              variants={heroItem}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-purple-700 text-xs font-semibold tracking-wide shadow-xs"
+            >
               <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-600"></span>
               </span>
               <span>{portfolioData.personal.heroBadge}</span>
-            </div>
+            </motion.div>
 
             {/* Main Heading: Clamp typography to guarantee max 2 lines */}
-            <div>
+            <motion.div variants={heroItem}>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0F0F14] tracking-tight leading-[1.15]">
                 Muhammad Haroon Rashid
               </h1>
@@ -114,18 +118,24 @@ export default function Hero() {
                   aria-hidden="true"
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Sub-line: mentions EPADS + IES directly */}
-            <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-xl">
+            <motion.p
+              variants={heroItem}
+              className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-xl"
+            >
               {portfolioData.personal.heroBio}
-            </p>
+            </motion.p>
 
-            {/* Primary & Secondary CTAs */}
-            <div className="pt-2 flex flex-wrap items-center gap-3.5">
+            {/* Primary & Secondary CTAs: Stacked full-width on mobile */}
+            <motion.div
+              variants={heroItem}
+              className="pt-2 flex flex-col sm:flex-row sm:items-center gap-3"
+            >
               <Link
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all duration-200 focus-ring"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all duration-200 focus-ring min-h-[48px]"
               >
                 <span>Hire Me</span>
                 <Send size={15} aria-hidden="true" />
@@ -134,19 +144,19 @@ export default function Hero() {
               <a
                 href={portfolioData.personal.cvPath}
                 download
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-purple-700 bg-white border border-purple-300 hover:bg-purple-50 hover:border-purple-400 hover:-translate-y-0.5 transition-all duration-200 shadow-xs focus-ring"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-purple-700 bg-white border border-purple-300 hover:bg-purple-50 hover:border-purple-400 hover:-translate-y-0.5 transition-all duration-200 shadow-xs focus-ring min-h-[48px]"
               >
                 <span>Download CV</span>
                 <Download size={15} aria-hidden="true" />
               </a>
 
               {/* Tertiary Icon Buttons with Tooltips */}
-              <div className="flex items-center gap-2 pl-1">
+              <div className="flex items-center justify-center sm:justify-start gap-2 pt-2 sm:pt-0 sm:pl-2">
                 <a
                   href={portfolioData.personal.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
                   aria-label="GitHub Profile (haroon9595)"
                   title="GitHub Profile"
                 >
@@ -157,7 +167,7 @@ export default function Hero() {
                   href={portfolioData.personal.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
                   aria-label="LinkedIn Profile"
                   title="LinkedIn Profile"
                 >
@@ -166,7 +176,7 @@ export default function Hero() {
 
                 <a
                   href={`mailto:${portfolioData.personal.email}`}
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
                   aria-label="Send Email"
                   title="Email Haroon"
                 >
@@ -177,18 +187,23 @@ export default function Hero() {
                   href={portfolioData.personal.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-emerald-600 hover:border-emerald-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-emerald-600 hover:border-emerald-300 hover:shadow-sm transition-all duration-200 focus-ring"
                   aria-label="WhatsApp Chat"
                   title="Chat on WhatsApp"
                 >
                   <Phone size={17} />
                 </a>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Right Column: Circular Profile Hero & Floating Cards */}
-          <div className="lg:col-span-5 relative flex justify-center items-center py-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.45, delay: 0.18 }}
+            className="lg:col-span-5 relative flex justify-center items-center py-4"
+          >
             <div className="relative w-[300px] h-[300px] sm:w-[360px] sm:h-[360px] md:w-[390px] md:h-[390px] flex items-center justify-center">
               {/* Soft purple gradient ring & background behind photo */}
               <div
@@ -250,16 +265,16 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Proof Strip Directly Under Hero (4 compact items) */}
+        {/* Proof Strip Directly Under Hero (Horizontal snap scroller on mobile) */}
         <div className="mt-14 pt-8 border-t border-purple-100">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory scrollbar-none pb-3 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
             {/* Proof Item 1: EPADS */}
             <Link
               href="#projects"
-              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring snap-center shrink-0 w-[82vw] max-w-[280px] sm:w-auto sm:max-w-none"
             >
               <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
                 <ShieldCheck size={16} aria-hidden="true" />
@@ -278,7 +293,7 @@ export default function Hero() {
             {/* Proof Item 2: IES Group */}
             <Link
               href="#projects"
-              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring snap-center shrink-0 w-[82vw] max-w-[280px] sm:w-auto sm:max-w-none"
             >
               <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
                 <Building2 size={16} aria-hidden="true" />
@@ -297,7 +312,7 @@ export default function Hero() {
             {/* Proof Item 3: HostelDesk */}
             <Link
               href="#projects"
-              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring snap-center shrink-0 w-[82vw] max-w-[280px] sm:w-auto sm:max-w-none"
             >
               <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
                 <Workflow size={16} aria-hidden="true" />
@@ -316,7 +331,7 @@ export default function Hero() {
             {/* Proof Item 4: Anthropic Education */}
             <Link
               href="#experience"
-              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring snap-center shrink-0 w-[82vw] max-w-[280px] sm:w-auto sm:max-w-none"
             >
               <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
                 <Award size={16} aria-hidden="true" />

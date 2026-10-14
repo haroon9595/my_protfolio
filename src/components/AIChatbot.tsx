@@ -185,19 +185,24 @@ export default function AIChatbot() {
         </div>
       )}
 
-      {/* Floating Chat Modal / Mobile Bottom Sheet */}
+      {/* Floating Chat Modal / Mobile Bottom Sheet (100dvh on mobile) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            initial={{ opacity: 0, y: 30, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.96 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            exit={{ opacity: 0, y: 30, scale: 0.98 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
             role="dialog"
             aria-modal="true"
             aria-label="Haroon's AI Assistant"
-            className="fixed bottom-0 sm:bottom-6 inset-x-0 sm:inset-x-auto sm:right-6 z-50 w-full sm:w-[400px] h-[540px] max-h-[88dvh] sm:max-h-[82vh] bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl shadow-purple-950/25 border border-purple-100 flex flex-col overflow-hidden"
+            className="fixed inset-x-0 bottom-0 sm:bottom-6 sm:inset-x-auto sm:right-6 z-50 w-full sm:w-[410px] h-[100dvh] sm:h-[540px] max-h-[100dvh] sm:max-h-[82vh] bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl shadow-purple-950/25 border border-purple-100 flex flex-col overflow-hidden"
           >
+            {/* Mobile Drag Handle */}
+            <div className="sm:hidden w-full flex items-center justify-center pt-2.5 pb-1 bg-white">
+              <div className="w-12 h-1.5 rounded-full bg-zinc-300" />
+            </div>
+
             {/* Header */}
             <div className="px-5 py-3.5 bg-gradient-to-r from-purple-50 via-white to-purple-50/50 border-b border-purple-100 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
@@ -219,7 +224,7 @@ export default function AIChatbot() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-purple-100/50 transition-colors focus-ring"
+                  className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-purple-100/50 transition-colors focus-ring cursor-pointer"
                   aria-label="Minimize Chat"
                 >
                   <Minimize2 size={16} aria-hidden="true" />
@@ -227,7 +232,7 @@ export default function AIChatbot() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-purple-100/50 transition-colors focus-ring"
+                  className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-purple-100/50 transition-colors focus-ring cursor-pointer"
                   aria-label="Close Chat"
                 >
                   <X size={16} aria-hidden="true" />
@@ -268,19 +273,19 @@ export default function AIChatbot() {
                 </div>
               )}
 
-              {/* Suggested prompts on initial screen - horizontally scrollable on mobile */}
+              {/* Suggested prompts: horizontally scrollable on mobile */}
               {messages.length === 1 && (
-                <div className="pt-2 space-y-1.5">
+                <div className="pt-2 space-y-2">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block px-1">
                     Suggested Questions
                   </span>
-                  <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-1">
+                  <div className="flex sm:flex-col gap-2 overflow-x-auto sm:overflow-visible scrollbar-none pb-1 sm:pb-0 -mx-1 px-1">
                     {SUGGESTED_PROMPTS.map((prompt) => (
                       <button
                         key={prompt}
                         type="button"
                         onClick={() => handleSend(prompt)}
-                        className="text-left text-xs bg-white hover:bg-purple-50 text-zinc-700 hover:text-purple-700 border border-purple-100 rounded-xl px-3 py-2 transition-all cursor-pointer shadow-2xs focus-ring"
+                        className="text-left text-xs bg-white hover:bg-purple-50 text-zinc-700 hover:text-purple-700 border border-purple-100 rounded-xl px-3.5 py-2.5 transition-all cursor-pointer shadow-2xs focus-ring shrink-0 whitespace-nowrap sm:whitespace-normal"
                       >
                         {prompt}
                       </button>
@@ -292,13 +297,13 @@ export default function AIChatbot() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Bar */}
+            {/* Input Bar with 16px text on mobile and safe-area padding */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSend();
               }}
-              className="p-3 bg-white border-t border-purple-100 flex items-center gap-2 shrink-0"
+              className="p-3 bg-white border-t border-purple-100 flex items-center gap-2 shrink-0 pb-5 sm:pb-3"
             >
               <input
                 ref={inputRef}
@@ -306,7 +311,7 @@ export default function AIChatbot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about systems, stack, projects..."
-                className="flex-1 px-4 py-2.5 rounded-full bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-xs sm:text-sm text-zinc-800 outline-none transition-all placeholder:text-zinc-400 focus-ring"
+                className="flex-1 px-4 py-2.5 rounded-full bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-base sm:text-sm text-zinc-800 outline-none transition-all placeholder:text-zinc-400 focus-ring"
                 disabled={isLoading}
               />
               <button

@@ -57,12 +57,12 @@ export default function About() {
           </div>
         </div>
 
-        {/* 4 Quick Facts Grid: All equal size & style */}
-        <div className="lg:col-span-5 flex flex-col justify-between space-y-3.5">
+        {/* 4 Quick Facts Grid: 2-column grid of equal-size tiles on mobile */}
+        <div className="lg:col-span-5 grid grid-cols-2 lg:grid-cols-1 gap-3">
           {portfolioData.about.quickFacts.map((fact) => (
             <div
               key={fact.label}
-              className="flex-1 rounded-2xl p-4 bg-white border border-purple-100 hover:border-purple-300 hover:shadow-xs transition-all duration-200 flex items-center gap-3.5"
+              className="rounded-2xl p-3.5 sm:p-4 bg-white border border-purple-100 hover:border-purple-300 hover:shadow-xs transition-all duration-200 flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3.5"
             >
               <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600 shrink-0">
                 {getIcon(fact.icon)}

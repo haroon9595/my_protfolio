@@ -13,7 +13,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#FAF9FF] border-t border-purple-100 py-10 md:py-12">
+    <footer className="bg-[#FAF9FF] border-t border-purple-100 pt-10 pb-24 sm:py-12">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-purple-100/70">
           {/* Logo & Role */}

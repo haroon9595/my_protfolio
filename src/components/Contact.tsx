@@ -125,9 +125,162 @@ export default function Contact() {
       subtitle="Tell me about your project or role. I reply by email or WhatsApp."
       variant="tint"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-        {/* Left Column: Direct Communication Channels */}
-        <div className="lg:col-span-5 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pb-8">
+        {/* Form FIRST on mobile (order-1), right on desktop (lg:order-2) */}
+        <div className="lg:col-span-7 order-1 lg:order-2">
+          <div className="bg-white border border-purple-100 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xs">
+            <h3 className="text-xl font-bold text-[#0F0F14] tracking-tight mb-5">
+              Send a Message
+            </h3>
+
+            <form
+              onSubmit={handleSubmit}
+              className={`space-y-4 ${status === "error" ? "animate-shake" : ""}`}
+            >
+              {/* Honeypot field (hidden for spam bot trapping) */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="company_title">Leave this empty</label>
+                <input
+                  type="text"
+                  id="company_title"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.honeypot}
+                  onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                />
+              </div>
+
+              {/* Name & Email Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
+                  >
+                    Your Name <span className="text-purple-600">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    inputMode="text"
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-500/20 text-base text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus-ring"
+                    disabled={status === "loading"}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
+                  >
+                    Email Address <span className="text-purple-600">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    inputMode="email"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="you@company.com"
+                    className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-500/20 text-base text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus-ring"
+                    disabled={status === "loading"}
+                  />
+                </div>
+              </div>
+
+              {/* "I am looking for" Dropdown */}
+              <div>
+                <label
+                  htmlFor="lookingFor"
+                  className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
+                >
+                  I am looking for
+                </label>
+                <select
+                  id="lookingFor"
+                  value={formData.lookingFor}
+                  onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-500/20 text-base text-zinc-900 outline-none transition-all focus-ring cursor-pointer"
+                  disabled={status === "loading"}
+                >
+                  <option value="Full-time role">Full-time role</option>
+                  <option value="Project / freelance work">Project / freelance work</option>
+                  <option value="Something else">Something else</option>
+                </select>
+              </div>
+
+              {/* Message */}
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
+                >
+                  Message <span className="text-purple-600">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  required
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="Describe your requirements, timeline, or company opportunity..."
+                  className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white focus:ring-2 focus:ring-purple-500/20 text-base text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus-ring resize-none"
+                  disabled={status === "loading"}
+                />
+              </div>
+
+              {/* Status Notifications */}
+              {status === "error" && (
+                <div
+                  role="alert"
+                  className="flex items-center gap-2.5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"
+                >
+                  <AlertCircle size={16} className="shrink-0" aria-hidden="true" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
+              {status === "success" && (
+                <div
+                  role="status"
+                  className="flex items-center gap-2.5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold animate-scale-in"
+                >
+                  <CheckCircle2 size={16} className="shrink-0 text-emerald-600" aria-hidden="true" />
+                  <span>Thanks, I will get back to you shortly!</span>
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="w-full min-h-[48px] py-3.5 rounded-full text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 disabled:opacity-70 shadow-md shadow-purple-500/20 hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer focus-ring"
+              >
+                {status === "loading" ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" aria-hidden="true" />
+                    <span>Sending message...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <Send size={15} aria-hidden="true" />
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Direct Channels Column (order-2 on mobile, lg:order-1 on desktop) */}
+        <div className="lg:col-span-5 order-2 lg:order-1 space-y-6">
           <div className="bg-white border border-purple-100 rounded-3xl p-6 sm:p-8 space-y-5 shadow-xs">
             <div>
               <h3 className="text-xl font-bold text-[#0F0F14] tracking-tight">
@@ -161,7 +314,7 @@ export default function Contact() {
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 transition-colors focus-ring shrink-0"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 transition-colors focus-ring shrink-0 cursor-pointer"
                   aria-label="Copy email address"
                 >
                   {copied ? (
@@ -230,152 +383,6 @@ export default function Contact() {
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Right Column: Interactive Form */}
-        <div className="lg:col-span-7">
-          <div className="bg-white border border-purple-100 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xs">
-            <h3 className="text-xl font-bold text-[#0F0F14] tracking-tight mb-5">
-              Send a Message
-            </h3>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Honeypot field (hidden for spam bot trapping) */}
-              <div className="hidden" aria-hidden="true">
-                <label htmlFor="company_title">Leave this empty</label>
-                <input
-                  type="text"
-                  id="company_title"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={formData.honeypot}
-                  onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
-                />
-              </div>
-
-              {/* Name & Email Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
-                  >
-                    Your Name <span className="text-purple-600">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Your name"
-                    className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white text-sm text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus-ring"
-                    disabled={status === "loading"}
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
-                  >
-                    Email Address <span className="text-purple-600">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="you@company.com"
-                    className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white text-sm text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus-ring"
-                    disabled={status === "loading"}
-                  />
-                </div>
-              </div>
-
-              {/* "I am looking for" Dropdown */}
-              <div>
-                <label
-                  htmlFor="lookingFor"
-                  className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
-                >
-                  I am looking for
-                </label>
-                <select
-                  id="lookingFor"
-                  value={formData.lookingFor}
-                  onChange={(e) => setFormData({ ...formData, lookingFor: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white text-sm text-zinc-900 outline-none transition-all focus-ring cursor-pointer"
-                  disabled={status === "loading"}
-                >
-                  <option value="Full-time role">Full-time role</option>
-                  <option value="Project / freelance work">Project / freelance work</option>
-                  <option value="Something else">Something else</option>
-                </select>
-              </div>
-
-              {/* Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-xs font-bold uppercase tracking-wider text-zinc-600 mb-1.5"
-                >
-                  Message <span className="text-purple-600">*</span>
-                </label>
-                <textarea
-                  id="message"
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Describe your requirements, timeline, or company opportunity..."
-                  className="w-full px-4 py-3 rounded-xl bg-[#FAF9FF] border border-purple-100 focus:border-purple-600 focus:bg-white text-sm text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus-ring resize-none"
-                  disabled={status === "loading"}
-                />
-              </div>
-
-              {/* Status Notifications */}
-              {status === "error" && (
-                <div
-                  role="alert"
-                  className="flex items-center gap-2.5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"
-                >
-                  <AlertCircle size={16} className="shrink-0" aria-hidden="true" />
-                  <span>{errorMessage}</span>
-                </div>
-              )}
-
-              {status === "success" && (
-                <div
-                  role="status"
-                  className="flex items-center gap-2.5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold"
-                >
-                  <CheckCircle2 size={16} className="shrink-0" aria-hidden="true" />
-                  <span>Thanks, I will get back to you shortly!</span>
-                </div>
-              )}
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="w-full py-3.5 rounded-full text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 disabled:opacity-70 shadow-md shadow-purple-500/20 hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer focus-ring"
-              >
-                {status === "loading" ? (
-                  <>
-                    <Loader2 size={16} className="animate-spin" aria-hidden="true" />
-                    <span>Sending message...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Send Message</span>
-                    <Send size={15} aria-hidden="true" />
-                  </>
-                )}
-              </button>
-            </form>
           </div>
         </div>
       </div>
