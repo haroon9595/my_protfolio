@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { portfolioData } from "@/data";
+import { portfolioData, ProjectItem } from "@/data";
+import Section from "@/components/Section";
+import TechIcon from "@/components/TechIcon";
+import ProjectArchitectureDiagram from "@/components/ProjectArchitectureDiagram";
 import {
   ExternalLink,
   CheckCircle2,
   Sparkles,
-  Layers,
   ArrowUpRight,
-  FileSpreadsheet,
-  FileText,
-  MessageSquare,
-  Bot,
+  ShieldAlert,
+  HelpCircle,
+  Zap,
 } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
 
@@ -34,13 +34,13 @@ export default function Projects() {
     "Machine Learning",
   ];
 
-  // Filter primary projects
-  const filteredProjects = portfolioData.projects.filter((p) => {
+  // Primary 4 case study projects
+  const filteredProjects = portfolioData.projects.filter((p: ProjectItem) => {
     if (activeFilter === "All") return true;
     return (p.categories as readonly string[]).includes(activeFilter);
   });
 
-  // Filter more projects
+  // Secondary ML/GenAI experiments
   const filteredMoreProjects = portfolioData.moreProjects.filter((p) => {
     if (activeFilter === "All") return true;
     return (p.categories as readonly string[]).includes(activeFilter);
@@ -50,304 +50,274 @@ export default function Projects() {
     switch (tagType) {
       case "bidding":
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#7C3AED] text-white shadow-sm shadow-purple-500/30">
-            <Sparkles size={12} />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-purple-600 text-white shadow-xs">
+            <Sparkles size={12} aria-hidden="true" />
             <span>{tag}</span>
           </span>
         );
       case "client":
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#7C3AED] text-white shadow-sm shadow-purple-500/30">
-            <CheckCircle2 size={12} />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-xs">
+            <CheckCircle2 size={12} aria-hidden="true" />
             <span>{tag}</span>
           </span>
         );
       case "end-to-end":
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-[#7C3AED] border border-purple-200">
-            <Layers size={12} />
-            <span>{tag}</span>
-          </span>
-        );
-      case "ai":
-        return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 border border-indigo-200">
-            <Bot size={12} />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white shadow-xs">
+            <Zap size={12} aria-hidden="true" />
             <span>{tag}</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-zinc-100 text-zinc-700">
-            {tag}
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-zinc-800 text-white shadow-xs">
+            <span>{tag}</span>
           </span>
         );
     }
   };
 
   return (
-    <section id="projects" className="py-20 md:py-28 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-purple-100/70 text-[#7C3AED] text-xs font-bold uppercase tracking-wider">
-            Featured Systems
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F0F14] tracking-tight">
-            Production & Real-World Projects
-          </h2>
-          <p className="text-base text-zinc-600 max-w-2xl mx-auto">
-            Practical systems built with real data, real API integrations, and
-            autonomous tool-calling intelligence.
-          </p>
-          <div className="w-12 h-1 bg-[#7C3AED] rounded-full mx-auto mt-2" />
-        </div>
+    <Section
+      id="projects"
+      eyebrow="Case Studies"
+      title="Featured Production Systems"
+      subtitle="Complete software systems engineered from discovery through production deployment."
+      variant="white"
+    >
+      {/* Category Filter Chips */}
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-12 sm:mb-16">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveFilter(cat)}
+            type="button"
+            className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-200 focus-ring cursor-pointer ${
+              activeFilter === cat
+                ? "bg-purple-600 text-white shadow-sm shadow-purple-500/20"
+                : "bg-purple-50 text-zinc-700 hover:bg-purple-100 hover:text-purple-700"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-14">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveFilter(category)}
-              className={`px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                activeFilter === category
-                  ? "bg-[#7C3AED] text-white shadow-md shadow-purple-500/25 scale-105"
-                  : "bg-[#FAF9FF] text-zinc-600 hover:text-[#7C3AED] border border-purple-100/80 hover:bg-purple-50"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+      {/* Featured Projects Grid: 4 Case Studies */}
+      <div className="space-y-12 md:space-y-16">
+        {filteredProjects.map((project: ProjectItem) => (
+          <article
+            key={project.id}
+            id={project.id}
+            className="rounded-3xl border border-purple-100 bg-[#FAF9FF] p-6 sm:p-8 lg:p-10 shadow-purple-subtle hover:shadow-purple-md transition-shadow duration-300"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+              {/* Left Column: Problem / What I Built / Outcome Case Study */}
+              <div className="lg:col-span-7 space-y-5">
+                <div className="flex items-center gap-3">
+                  {getTagBadge(project.tag, project.tagType)}
+                  <span className="text-xs font-medium text-zinc-500">
+                    {project.categories.join(" · ")}
+                  </span>
+                </div>
 
-        {/* Featured Projects List */}
-        <div className="space-y-12 mb-20">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => {
-              const isFirstFeatured = project.featured;
-
-              return (
-                <motion.div
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className={`rounded-3xl border transition-all duration-300 relative overflow-hidden ${
-                    isFirstFeatured
-                      ? "bg-gradient-to-br from-[#FAF9FF] via-white to-purple-50/40 border-purple-200/90 shadow-lg shadow-purple-900/5 p-8 sm:p-12 ring-1 ring-purple-400/20"
-                      : "bg-[#FAF9FF] border-purple-100/80 shadow-xs hover:shadow-lg p-7 sm:p-10"
-                  }`}
-                >
-                  {/* Decorative top accent for featured */}
-                  {isFirstFeatured && (
-                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#7C3AED] via-purple-500 to-[#C4B5FD]" />
-                  )}
-
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
-                    {/* Left details */}
-                    <div className="space-y-5 flex-1">
-                      <div className="flex flex-wrap items-center gap-3">
-                        {getTagBadge(project.tag, project.tagType)}
-
-                        {isFirstFeatured && (
-                          <span className="text-xs font-bold uppercase tracking-wider text-purple-900/70 bg-purple-100/80 px-2.5 py-0.5 rounded-md">
-                            Flagship System
-                          </span>
-                        )}
-                      </div>
-
-                      <h3
-                        className={`font-black text-[#0F0F14] tracking-tight ${
-                          isFirstFeatured
-                            ? "text-2xl sm:text-3xl lg:text-4xl leading-tight"
-                            : "text-xl sm:text-2xl lg:text-3xl"
-                        }`}
-                      >
-                        {project.title}
-                      </h3>
-
-                      <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-3xl">
-                        {project.description}
-                      </p>
-
-                      {/* Highlights */}
-                      <div className="pt-2">
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
-                          What it does & System Highlights
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-                          {project.highlights.map((highlight, hIdx) => (
-                            <div
-                              key={hIdx}
-                              className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-700 bg-white/80 border border-purple-100/60 p-2.5 sm:p-3 rounded-xl shadow-2xs"
-                            >
-                              <CheckCircle2
-                                size={16}
-                                className="text-[#7C3AED] shrink-0 mt-0.5"
-                              />
-                              <span className="leading-snug">{highlight}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Tech Stack Badges */}
-                      <div className="pt-2">
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
-                          Technologies
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {project.stack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="px-3 py-1 rounded-full text-xs font-semibold bg-white border border-purple-200/70 text-zinc-800 shadow-2xs"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Links */}
-                      <div className="pt-3 flex flex-wrap items-center gap-3">
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] shadow-md shadow-purple-500/20 hover:shadow-lg transition-all"
-                          >
-                            <span>Live System</span>
-                            <ExternalLink size={14} />
-                          </a>
-                        )}
-
-                        {project.githubUrl && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-zinc-700 bg-white border border-purple-200 hover:border-[#7C3AED] hover:text-[#7C3AED] transition-all shadow-2xs"
-                          >
-                            <GithubIcon size={15} />
-                            <span>GitHub</span>
-                          </a>
-                        )}
-
-                        {!project.liveUrl && !project.githubUrl && (
-                          <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-zinc-500 bg-zinc-100">
-                            <span>Production / Client Restricted Code</span>
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Right summary preview box for EPADS / HostelDesk */}
-                    {isFirstFeatured && (
-                      <div className="lg:w-80 shrink-0 bg-white rounded-2xl p-6 border border-purple-100 shadow-md space-y-4">
-                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#7C3AED]">
-                          <MessageSquare size={16} />
-                          <span>WhatsApp Bot Summary</span>
-                        </div>
-                        <div className="bg-[#FAF9FF] p-4 rounded-xl text-xs space-y-2 border border-purple-50 font-mono text-zinc-700">
-                          <p className="font-bold text-zinc-900">
-                            📋 Tender Summary Card:
-                          </p>
-                          <p>• Agency: EPADS Portal</p>
-                          <p>• Closing: Real-time countdown</p>
-                          <p>• Bid Security: Structured terms</p>
-                          <p>• FastMCP: AI Tool Calling</p>
-                        </div>
-                        <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 pt-2 border-t border-purple-50">
-                          <span className="flex items-center gap-1">
-                            <FileSpreadsheet size={14} className="text-emerald-600" />
-                            Excel
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <FileText size={14} className="text-rose-600" />
-                            PDF
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <FileText size={14} className="text-blue-600" />
-                            Word
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </div>
-
-        {/* More Work Section */}
-        {filteredMoreProjects.length > 0 && (
-          <div className="mt-16 pt-12 border-t border-purple-100">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-              <div>
-                <h3 className="text-2xl font-bold text-[#0F0F14] tracking-tight">
-                  More Specialized Systems & Models
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F14] tracking-tight">
+                  {project.title}
                 </h3>
-                <p className="text-sm text-zinc-500 mt-1">
-                  Computer vision, machine learning models, and GenAI utilities.
-                </p>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredMoreProjects.map((project) => (
-                <div
-                  key={project.id}
-                  className="bg-[#FAF9FF] rounded-2xl p-6 border border-purple-100 hover:border-[#7C3AED]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-100/80 text-[#7C3AED] mb-3">
-                      {project.tag}
-                    </div>
+                {/* Problem Statement */}
+                {project.problem && (
+                  <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/60 text-amber-900 text-xs sm:text-sm leading-relaxed">
+                    <span className="font-bold block text-amber-950 mb-0.5">Problem:</span>
+                    {project.problem}
+                  </div>
+                )}
 
-                    <h4 className="text-base font-bold text-[#0F0F14] tracking-tight mb-2">
-                      {project.title}
-                    </h4>
+                {/* What I Built */}
+                <div className="space-y-1.5">
+                  <span className="text-xs font-bold uppercase tracking-wider text-purple-700 block">
+                    What I built:
+                  </span>
+                  <p className="text-sm sm:text-base text-zinc-700 leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
 
-                    <p className="text-xs text-zinc-600 leading-relaxed mb-4">
-                      {project.description}
+                {/* Outcome */}
+                {project.outcome && (
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 block">
+                      Outcome:
+                    </span>
+                    <p className="text-sm sm:text-base text-zinc-700 leading-relaxed">
+                      {project.outcome}
                     </p>
                   </div>
+                )}
 
-                  <div>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.stack.map((t) => (
-                        <span
-                          key={t}
-                          className="px-2 py-0.5 rounded text-[10px] font-medium bg-white text-zinc-700 border border-purple-100"
+                {/* Why this stack */}
+                {project.whyStack && (
+                  <div className="text-xs text-zinc-600 bg-white p-3 rounded-xl border border-purple-100">
+                    <span className="font-bold text-zinc-800">Why this stack: </span>
+                    {project.whyStack}
+                  </div>
+                )}
+
+                {/* Engineering Highlights (3 facts) */}
+                {project.engineeringHighlights && project.engineeringHighlights.length > 0 && (
+                  <div className="space-y-2 pt-1">
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 block">
+                      Engineering highlights:
+                    </span>
+                    <ul className="space-y-1.5">
+                      {project.engineeringHighlights.map((fact: string) => (
+                        <li
+                          key={fact}
+                          className="flex items-start gap-2 text-xs sm:text-sm text-zinc-700"
                         >
-                          {t}
-                        </span>
+                          <CheckCircle2
+                            size={15}
+                            className="text-purple-600 shrink-0 mt-0.5"
+                            aria-hidden="true"
+                          />
+                          <span>{fact}</span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
+                  </div>
+                )}
 
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#7C3AED] hover:text-[#6D28D9]"
-                      >
-                        <GithubIcon size={13} />
-                        <span>Source Code</span>
-                        <ArrowUpRight size={13} />
-                      </a>
-                    )}
+                {/* Stack Chips with TechIcon */}
+                <div className="pt-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 block mb-2">
+                    Technologies:
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {project.stack.map((tech: string) => (
+                      <TechIcon
+                        key={tech}
+                        name={tech}
+                        variant="pill"
+                        size={15}
+                        theme="light"
+                        showTooltip
+                      />
+                    ))}
                   </div>
                 </div>
-              ))}
+
+                {/* Action Buttons & Access Status */}
+                <div className="pt-3 flex flex-wrap items-center gap-3">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 shadow-sm transition-all duration-200 focus-ring"
+                    >
+                      <span>Live System</span>
+                      <ExternalLink size={14} aria-hidden="true" />
+                    </a>
+                  )}
+
+                  {project.githubUrl ? (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-zinc-800 bg-white border border-purple-200 hover:bg-purple-50 transition-all duration-200 focus-ring"
+                    >
+                      <GithubIcon size={16} />
+                      <span>Source Code</span>
+                    </a>
+                  ) : (
+                    <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-600 border border-zinc-200">
+                      <ShieldAlert size={14} className="text-zinc-500" aria-hidden="true" />
+                      <span>Production Code (Restricted / On Request)</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Column: Inline Architecture Diagram */}
+              <div className="lg:col-span-5 flex flex-col justify-center">
+                {/* Responsive Architecture Diagram */}
+                <ProjectArchitectureDiagram projectId={project.id} />
+
+                {/* TODO(owner): add screenshots once available.
+                    If screenshots array is populated, render them here.
+                    Currently empty so no empty placeholder frames are rendered. */}
+                {project.screenshots && project.screenshots.length > 0 && (
+                  <div className="mt-4">
+                    {/* Screenshots container */}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          </article>
+        ))}
       </div>
-    </section>
+
+      {/* "More work: ML and GenAI experiments" Section */}
+      <div className="mt-20 pt-12 border-t border-purple-100">
+        <div className="text-center mb-8">
+          <h3 className="text-xl sm:text-2xl font-bold text-[#0F0F14] tracking-tight">
+            More Work: ML & GenAI Experiments
+          </h3>
+          <p className="text-sm text-zinc-500 mt-1 max-w-xl mx-auto">
+            Practical models, computer vision systems, and hackathon prototypes.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {filteredMoreProjects.map((exp) => (
+            <div
+              key={exp.id}
+              className="rounded-2xl p-5 bg-[#FAF9FF] border border-purple-100/80 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+            >
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-100/70 px-2 py-0.5 rounded-full">
+                    {exp.tag}
+                  </span>
+                  {exp.githubUrl ? (
+                    <a
+                      href={exp.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-zinc-400 hover:text-purple-600 focus-ring rounded"
+                      aria-label={`${exp.title} GitHub`}
+                    >
+                      <ArrowUpRight size={16} />
+                    </a>
+                  ) : (
+                    <span title="Available on request" className="text-zinc-400">
+                      <HelpCircle size={14} />
+                    </span>
+                  )}
+                </div>
+
+                <h4 className="text-base font-bold text-[#0F0F14]">{exp.title}</h4>
+                <p className="text-xs text-zinc-600 leading-relaxed">{exp.description}</p>
+              </div>
+
+              <div className="pt-4 flex flex-wrap gap-1.5">
+                {exp.stack.map((tech) => (
+                  <TechIcon
+                    key={tech}
+                    name={tech}
+                    variant="pill"
+                    size={13}
+                    theme="light"
+                    className="text-[10px] px-2 py-0.5"
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Section>
   );
 }
