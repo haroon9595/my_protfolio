@@ -74,6 +74,7 @@ export const portfolioData = {
     ],
     location: "Faisalabad, Pakistan",
     email: "haroon11005@gmail.com",
+    emailGmailUrl: "https://mail.google.com/mail/?view=cm&fs=1&to=haroon11005@gmail.com",
     whatsapp: "+92 347 6379600",
     whatsappLink: "https://wa.me/923476379600",
     github: "https://github.com/haroon9595",

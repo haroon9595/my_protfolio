@@ -303,7 +303,9 @@ export default function Contact() {
                       Email
                     </span>
                     <a
-                      href={`mailto:${portfolioData.personal.email}`}
+                      href={portfolioData.personal.emailGmailUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-xs sm:text-sm font-bold text-[#0F0F14] hover:text-purple-600 truncate block transition-colors"
                     >
                       {portfolioData.personal.email}

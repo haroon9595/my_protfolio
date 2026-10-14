@@ -175,10 +175,12 @@ export default function Hero() {
                 </a>
 
                 <a
-                  href={`mailto:${portfolioData.personal.email}`}
+                  href={portfolioData.personal.emailGmailUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
-                  aria-label="Send Email"
-                  title="Email Haroon"
+                  aria-label="Send Email via Gmail"
+                  title="Compose email on Gmail"
                 >
                   <Mail size={17} />
                 </a>
