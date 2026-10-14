@@ -15,6 +15,7 @@ import {
   Check,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import SmartEmailLink from "@/components/SmartEmailLink";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -306,14 +307,13 @@ export default function Contact() {
                     <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">
                       Email
                     </span>
-                    <a
-                      href={portfolioData.personal.emailGmailUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <SmartEmailLink
                       className="text-xs sm:text-sm font-bold text-[#0F0F14] hover:text-purple-600 truncate block transition-colors"
+                      aria-label="Email me via Gmail"
+                      title="Email me via Gmail"
                     >
                       {portfolioData.personal.email}
-                    </a>
+                    </SmartEmailLink>
                   </div>
                 </div>
 

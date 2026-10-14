@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { portfolioData } from "@/data";
-import { Menu, X, ArrowUpRight, Download, Send } from "lucide-react";
+import { Menu, X, ArrowUpRight, Download, Send, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from "@/components/Icons";
+import SmartEmailLink from "@/components/SmartEmailLink";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -273,6 +274,13 @@ export default function Navbar() {
               >
                 <WhatsappIcon size={18} />
               </a>
+              <SmartEmailLink
+                className="w-11 h-11 rounded-full bg-purple-50 border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:bg-purple-100 transition-colors"
+                aria-label="Email me via Gmail"
+                title="Email me via Gmail"
+              >
+                <Mail size={18} />
+              </SmartEmailLink>
             </div>
           </motion.div>
         )}

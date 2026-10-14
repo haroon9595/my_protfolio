@@ -63,6 +63,18 @@ export interface SkillCategory {
   skills: string[];
 }
 
+const EMAIL = "haroon11005@gmail.com";
+const EMAIL_SUBJECT = "Hello Haroon";
+const EMAIL_BODY = "Hi Haroon,\n\n";
+
+export const emailConfig = {
+  address: EMAIL,
+  subject: EMAIL_SUBJECT,
+  body: EMAIL_BODY,
+  gmailUrl: `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`,
+  mailtoUrl: `mailto:${EMAIL}?subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`,
+};
+
 export const portfolioData = {
   personal: {
     name: "Muhammad Haroon Rashid",
@@ -73,8 +85,11 @@ export const portfolioData = {
       "Automation Engineer",
     ],
     location: "Faisalabad, Pakistan",
-    email: "haroon11005@gmail.com",
-    emailGmailUrl: "https://mail.google.com/mail/?view=cm&fs=1&to=haroon11005@gmail.com",
+    email: emailConfig.address,
+    emailSubject: emailConfig.subject,
+    emailBody: emailConfig.body,
+    emailGmailUrl: emailConfig.gmailUrl,
+    emailMailtoUrl: emailConfig.mailtoUrl,
     whatsapp: "+92 347 6379600",
     whatsappLink: "https://wa.me/923476379600",
     github: "https://github.com/haroon9595",

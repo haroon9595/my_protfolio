@@ -4,6 +4,7 @@ import Link from "next/link";
 import { portfolioData } from "@/data";
 import { Mail, Phone, ArrowUp } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import SmartEmailLink from "@/components/SmartEmailLink";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -50,15 +51,13 @@ export default function Footer() {
             >
               <LinkedinIcon size={16} />
             </a>
-            <a
-              href={portfolioData.personal.emailGmailUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <SmartEmailLink
               className="w-9 h-9 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-600 hover:text-purple-600 hover:border-purple-300 transition-colors focus-ring"
-              aria-label="Send Email via Gmail"
+              aria-label="Email me via Gmail"
+              title="Email me via Gmail"
             >
               <Mail size={16} />
-            </a>
+            </SmartEmailLink>
             <a
               href={portfolioData.personal.whatsappLink}
               target="_blank"

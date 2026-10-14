@@ -20,6 +20,7 @@ import {
   Workflow,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import SmartEmailLink from "@/components/SmartEmailLink";
 
 // 12 Key technologies for the infinite logo marquee
 const MARQUEE_TECH = [
@@ -174,16 +175,13 @@ export default function Hero() {
                   <LinkedinIcon size={17} />
                 </a>
 
-                <a
-                  href={portfolioData.personal.emailGmailUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <SmartEmailLink
                   className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
-                  aria-label="Send Email via Gmail"
-                  title="Compose email on Gmail"
+                  aria-label="Email me via Gmail"
+                  title="Email me via Gmail"
                 >
                   <Mail size={17} />
-                </a>
+                </SmartEmailLink>
 
                 <a
                   href={portfolioData.personal.whatsappLink}
