@@ -208,60 +208,45 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Card A (Top-Right): Verifiable live deployments */}
-              <div className="absolute -top-3 -right-3 sm:-right-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-lg shadow-purple-900/10 border border-purple-100 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white shadow-xs">
-                  <Layers size={18} aria-hidden="true" />
+              {/* Card A (Top-Right): Verifiable live deployments - placed outside face */}
+              <div className="absolute -top-4 -right-2 sm:-top-5 sm:-right-8 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 shadow-lg shadow-purple-900/10 border border-purple-100 flex items-center gap-2.5 sm:gap-3 float-slow-1">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white shadow-xs shrink-0">
+                  <Layers size={16} aria-hidden="true" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-[#0F0F14] tracking-tight leading-none">
+                  <div className="text-[11px] sm:text-xs font-bold text-[#0F0F14] tracking-tight leading-none">
                     Live Systems
                   </div>
-                  <div className="text-[11px] font-semibold text-purple-700 mt-1 whitespace-nowrap">
+                  <div className="text-[10px] sm:text-[11px] font-semibold text-purple-700 mt-0.5 sm:mt-1 whitespace-nowrap">
                     EPADS · IES · HostelDesk
                   </div>
                 </div>
               </div>
 
-              {/* Card B (Bottom-Left): Core stack with REAL logo tiles + '+' link to Skills */}
-              <div className="absolute -bottom-3 -left-3 sm:-left-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 shadow-lg shadow-purple-900/10 border border-purple-100 flex flex-col gap-1.5">
+              {/* Card B (Bottom-Left): Core stack with REAL logo tiles - placed outside face */}
+              <div className="absolute -bottom-4 -left-2 sm:-bottom-5 sm:-left-8 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-2 sm:p-3 shadow-lg shadow-purple-900/10 border border-purple-100 flex flex-col gap-1 sm:gap-1.5 float-slow-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full">
+                  <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full">
                     Core Stack
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 pt-0.5">
-                  <TechIcon name="Python" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
-                  <TechIcon name="FastAPI" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
-                  <TechIcon name="n8n" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
-                  <TechIcon name="Next.js" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
-                  <TechIcon name="PostgreSQL" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
-                  <TechIcon name="LangChain" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                <div className="flex items-center gap-1 sm:gap-1.5 pt-0.5">
+                  <TechIcon name="Python" variant="icon" size={15} showTooltip className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="FastAPI" variant="icon" size={15} showTooltip className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="n8n" variant="icon" size={15} showTooltip className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="Next.js" variant="icon" size={15} showTooltip className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="PostgreSQL" variant="icon" size={15} showTooltip className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="LangChain" variant="icon" size={15} showTooltip className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
 
                   <Link
                     href="#skills"
-                    className="w-7 h-7 rounded-lg bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center font-bold text-xs transition-colors focus-ring"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center font-bold text-xs transition-colors focus-ring"
                     title="View all skills"
                     aria-label="View all skills"
                   >
                     +
                   </Link>
-                </div>
-              </div>
-
-              {/* Card C (Tiny floating award): Claude Code in Action */}
-              <div className="absolute top-1/2 -left-4 sm:-left-8 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md rounded-xl p-2 shadow-md shadow-purple-900/10 border border-purple-100 flex items-center gap-2 max-w-[160px]">
-                <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0">
-                  <Award size={15} aria-hidden="true" />
-                </div>
-                <div className="leading-tight">
-                  <div className="text-[10px] font-bold text-zinc-900 truncate">
-                    Claude Code in Action
-                  </div>
-                  <div className="text-[9px] font-medium text-zinc-500 truncate">
-                    Anthropic Education
-                  </div>
                 </div>
               </div>
             </div>

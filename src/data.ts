@@ -62,9 +62,9 @@ export const portfolioData = {
     whatsappLink: "https://wa.me/923476379600",
     github: "https://github.com/haroon9595",
     githubDisplay: "github.com/haroon9595",
-    linkedin: "https://linkedin.com/in/muhammadharoonrashid848777287",
-    linkedinDisplay: "linkedin.com/in/muhammadharoonrashid848777287",
-    // Using the local PDF — fast, no login required, no expiry
+    linkedin: "https://www.linkedin.com/in/muhammad-haroon-rashid-848777287/",
+    linkedinDisplay: "linkedin.com/in/muhammad-haroon-rashid-848777287",
+    // Local PDF downloaded from Google Drive — fast, no login required, no expiry
     cvPath: "/Muhammad_Haroon_Rashid_CV.pdf",
     profileImage:
       "https://res.cloudinary.com/drfnqdaqz/image/upload/f_auto,q_auto/v1791381225/Screenshot_2026-10-07_185319_qdodew.png",
@@ -414,7 +414,7 @@ export const portfolioData = {
       skills: ["Next.js", "React", "Tailwind CSS", "Streamlit"],
     },
     {
-      category: "Dev Tools & Platforms",
+      category: "AI-Assisted Development & Tools",
       icon: "tool",
       skills: ["Git", "GitHub", "Vercel", "Render", "Claude Code", "Antigravity"],
     },

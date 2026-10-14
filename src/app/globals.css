@@ -139,3 +139,55 @@ h1, h2, h3, h4, h5, h6 {
     transform: none;
   }
 }
+
+/* Chatbot FAB & Floating Cards idle animations */
+@keyframes botWave {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(8deg);
+  }
+  75% {
+    transform: translateY(1px) rotate(-6deg);
+  }
+}
+
+.bot-idle-wave {
+  animation: botWave 4s ease-in-out infinite;
+}
+
+@keyframes floatSlow1 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes floatSlow2 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.float-slow-1 {
+  animation: floatSlow1 4.5s ease-in-out infinite;
+}
+
+.float-slow-2 {
+  animation: floatSlow2 5s ease-in-out infinite 0.6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bot-idle-wave,
+  .float-slow-1,
+  .float-slow-2 {
+    animation: none !important;
+    transform: none !important;
+  }
+}

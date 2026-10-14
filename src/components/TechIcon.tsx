@@ -95,15 +95,46 @@ export default function TechIcon({
     }
   };
 
+function getRelativeLuminance(hex: string): number {
+  const cleanHex = hex.replace("#", "");
+  if (cleanHex.length !== 6) return 0.5;
+  const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
+  const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
+  const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
+  const a = [r, g, b].map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+  return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+}
+
   // Render SVG Icon itself
   const renderIcon = (iconSize: number) => {
     if (iconInfo.type === "simple") {
       const { path, brandHex } = { path: iconInfo.data.path, brandHex: iconInfo.brandHex };
+      const lum = getRelativeLuminance(brandHex);
+      const isDarkBrand = lum < 0.22;
+
+      // In dark theme, if variant is tile and brand is dark, render inside a white tile
+      if (theme === "dark" && isDarkBrand && variant === "tile") {
+        return (
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/95 flex items-center justify-center p-1 shadow-xs">
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              width={iconSize - 6}
+              height={iconSize - 6}
+              fill={brandHex === "#000000" ? "#111827" : brandHex}
+              aria-hidden="true"
+              className="shrink-0"
+            >
+              <path d={path} />
+            </svg>
+          </div>
+        );
+      }
+
+      // If in dark theme on pill or other, dark brand switches to white
       const fillHex =
-        theme === "dark"
-          ? brandHex === "#000000" || brandHex === "#191919" || brandHex === "#181717"
-            ? "#FFFFFF"
-            : brandHex
+        theme === "dark" && isDarkBrand
+          ? "#FFFFFF"
           : brandHex;
 
       return (
@@ -215,12 +246,12 @@ export default function TechIcon({
       tabIndex={0}
       role="group"
       aria-label={name}
-      className={`group relative flex flex-col items-center justify-center p-3 sm:p-3.5 rounded-xl border transition-all duration-200 focus-ring hover:-translate-y-1 cursor-default ${tileStyles} ${className}`}
+      className={`group relative flex flex-col items-center justify-center p-2.5 sm:p-3.5 rounded-xl border transition-all duration-200 focus-ring hover:-translate-y-1 cursor-default ${tileStyles} ${className}`}
     >
-      <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-200">
-        {renderIcon(size || 30)}
+      <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center mb-1.5 group-hover:scale-110 transition-transform duration-200">
+        {renderIcon(size || 26)}
       </div>
-      <span className="text-[11px] sm:text-xs font-medium text-center line-clamp-1 w-full">
+      <span className="text-[11px] sm:text-xs font-medium text-center leading-tight break-words text-purple-100/90 w-full line-clamp-2 min-h-[26px] flex items-center justify-center">
         {name}
       </span>
       {/* Accessible Tooltip on hover/focus */}

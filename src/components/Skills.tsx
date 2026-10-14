@@ -28,6 +28,7 @@ export default function Skills() {
         return <Database size={20} className="text-purple-400" aria-hidden="true" />;
       case "Frontend":
         return <Layout size={20} className="text-purple-400" aria-hidden="true" />;
+      case "AI-Assisted Development & Tools":
       case "Dev Tools & Platforms":
         return <Wrench size={20} className="text-purple-400" aria-hidden="true" />;
       default:
@@ -51,7 +52,7 @@ export default function Skills() {
             <div
               key={categoryGroup.category}
               className={`glass-panel-dark rounded-2xl p-5 sm:p-6 border border-[#282046] hover:border-purple-500/50 hover:shadow-purple-glow transition-all duration-300 flex flex-col justify-between ${
-                isFullSpan ? "lg:col-span-3" : ""
+                isFullSpan ? "md:col-span-2 lg:col-span-3" : ""
               }`}
             >
               <div>

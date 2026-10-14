@@ -8,6 +8,7 @@ import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
+import { portfolioData } from "@/data";
 
 export default function Home() {
   const jsonLd = {
@@ -24,8 +25,8 @@ export default function Home() {
       addressCountry: "PK",
     },
     sameAs: [
-      "https://github.com/haroon9595",
-      "https://linkedin.com/in/muhammadharoonrashid848777287",
+      portfolioData.personal.github,
+      portfolioData.personal.linkedin,
     ],
     knowsAbout: [
       "Full-Stack Development",
