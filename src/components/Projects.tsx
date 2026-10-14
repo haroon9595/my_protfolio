@@ -10,6 +10,7 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
+import { GithubIcon } from "@/components/Icons";
 
 type CategoryFilter =
   | "All"
@@ -255,27 +256,47 @@ export default function Projects() {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
                     {/* Primary Button: View Details */}
                     <button
                       type="button"
                       onClick={() => openProjectModal(project)}
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-700 shadow-xs transition-all focus-ring cursor-pointer"
+                      className="flex-1 min-w-[110px] inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-700 shadow-xs transition-all focus-ring cursor-pointer"
                     >
                       <span>View details</span>
                       <ArrowRight size={13} aria-hidden="true" />
                     </button>
 
-                    {/* Secondary Button: Live (only when live URL exists) */}
-                    {project.links.live && (
+                    {/* Secondary Button: GitHub (only when githubUrl exists) */}
+                    {project.githubUrl && (
                       <a
-                        href={project.links.live}
+                        href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-zinc-700 bg-white border border-purple-200 hover:bg-purple-50 transition-all focus-ring"
-                        title="Open live production deployment"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-zinc-700 bg-white border border-purple-200 hover:bg-purple-50 hover:text-purple-700 transition-all focus-ring shrink-0"
+                        aria-label={`View ${project.title} on GitHub`}
+                        title="View on GitHub"
                       >
-                        <span>Live</span>
+                        <GithubIcon size={13} />
+                        <span>GitHub</span>
+                      </a>
+                    )}
+
+                    {/* Secondary Button: Live / Live Demo (only when liveUrl exists) */}
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-zinc-700 bg-white border border-purple-200 hover:bg-purple-50 hover:text-purple-700 transition-all focus-ring shrink-0"
+                        aria-label={
+                          project.liveLabel === "Live Demo"
+                            ? `Watch ${project.title} live demo`
+                            : `Open ${project.title} live deployment`
+                        }
+                        title={project.liveLabel === "Live Demo" ? "Live Demo" : "Live"}
+                      >
+                        <span>{project.liveLabel || "Live"}</span>
                         <ExternalLink size={12} aria-hidden="true" />
                       </a>
                     )}
@@ -346,14 +367,29 @@ export default function Projects() {
                   </p>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => openProjectModal(item)}
-                  className="w-full inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 hover:text-purple-900 transition-colors focus-ring cursor-pointer"
-                >
-                  <span>Details</span>
-                  <ArrowRight size={11} aria-hidden="true" />
-                </button>
+                <div className="flex items-center gap-1.5 mt-auto">
+                  <button
+                    type="button"
+                    onClick={() => openProjectModal(item)}
+                    className="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 hover:text-purple-900 transition-colors focus-ring cursor-pointer min-h-[30px]"
+                  >
+                    <span>Details</span>
+                    <ArrowRight size={11} aria-hidden="true" />
+                  </button>
+
+                  {item.githubUrl && (
+                    <a
+                      href={item.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center p-1.5 rounded-lg text-zinc-700 bg-white border border-purple-200 hover:bg-purple-50 hover:text-purple-700 transition-all focus-ring shrink-0 min-h-[30px] min-w-[30px]"
+                      aria-label={`View ${item.title} on GitHub`}
+                      title="View on GitHub"
+                    >
+                      <GithubIcon size={13} />
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>

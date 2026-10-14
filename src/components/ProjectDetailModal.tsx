@@ -89,7 +89,7 @@ export default function ProjectDetailModal({
 
   if (!project) return null;
 
-  const { details, links } = project;
+  const { details } = project;
 
   const handleDiscussClick = () => {
     onClose();
@@ -187,29 +187,39 @@ export default function ProjectDetailModal({
 
             {/* Links and Status */}
             <div className="flex flex-wrap items-center gap-3 pt-1">
-              {links.live && (
+              {project.githubUrl && (
                 <a
-                  href={links.live}
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-zinc-800 bg-white border border-purple-200 hover:bg-purple-50 transition-all focus-ring"
+                  aria-label={`View ${project.title} on GitHub`}
+                  title="View on GitHub"
+                >
+                  <GithubIcon size={15} />
+                  <span>GitHub</span>
+                </a>
+              )}
+
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 shadow-xs transition-all focus-ring"
+                  aria-label={
+                    project.liveLabel === "Live Demo"
+                      ? `Watch ${project.title} live demo`
+                      : `Open ${project.title} live deployment`
+                  }
+                  title={project.liveLabel === "Live Demo" ? "Live Demo" : "Live"}
                 >
-                  <span>Open Live System</span>
+                  <span>{project.liveLabel || "Live"}</span>
                   <ExternalLink size={14} aria-hidden="true" />
                 </a>
               )}
 
-              {links.repo ? (
-                <a
-                  href={links.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-zinc-800 bg-white border border-purple-200 hover:bg-purple-50 transition-all focus-ring"
-                >
-                  <GithubIcon size={15} />
-                  <span>Repository</span>
-                </a>
-              ) : (
+              {!project.githubUrl && !project.liveUrl && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-600 border border-zinc-200">
                   <ShieldAlert size={13} className="text-zinc-500" aria-hidden="true" />
                   <span>Production (Restricted / Private)</span>

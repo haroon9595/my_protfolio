@@ -29,6 +29,8 @@ export interface ProjectItem {
   status: string;
   links: ProjectLinks;
   liveUrl?: string;
+  demoUrl?: string;
+  liveLabel?: string;
   githubUrl?: string;
   details: ProjectDetails;
   screenshots?: string[]; // TODO(owner): add screenshot URLs when available
@@ -275,10 +277,12 @@ export const portfolioData = {
       stack: ["n8n Cloud", "Groq LLM", "Zoho SMTP", "Supabase", "Vercel"],
       status: "Production Client System",
       links: {
-        live: "https://iesgroup.com.pk",
+        live: "https://lnkd.in/p/d8wh2VKN",
         repo: undefined,
       },
-      liveUrl: "https://iesgroup.com.pk",
+      liveUrl: "https://lnkd.in/p/d8wh2VKN",
+      demoUrl: "https://lnkd.in/p/d8wh2VKN",
+      liveLabel: "Live Demo",
       githubUrl: undefined,
       screenshots: [],
       details: {
@@ -323,10 +327,11 @@ export const portfolioData = {
       status: "Live System",
       links: {
         live: "https://hostel-complain-management-portal.vercel.app",
-        repo: undefined,
+        repo: "https://github.com/haroon9595/hostel-complain-management-portal",
       },
       liveUrl: "https://hostel-complain-management-portal.vercel.app",
-      githubUrl: undefined,
+      liveLabel: "Live",
+      githubUrl: "https://github.com/haroon9595/hostel-complain-management-portal",
       screenshots: [],
       details: {
         problem:
@@ -371,11 +376,13 @@ export const portfolioData = {
       stack: ["LangChain", "FastAPI", "Streamlit", "FAISS", "Groq", "Hugging Face"],
       status: "Personal Project",
       links: {
-        live: undefined,
-        repo: "https://github.com/haroon9595/tubemind-ai",
+        live: "https://lnkd.in/p/dpumVufc",
+        repo: "https://github.com/haroon9595/TubeMind-AI-YoutubeChatbot---RAG-",
       },
-      liveUrl: undefined,
-      githubUrl: "https://github.com/haroon9595/tubemind-ai",
+      liveUrl: "https://lnkd.in/p/dpumVufc",
+      demoUrl: "https://lnkd.in/p/dpumVufc",
+      liveLabel: "Live Demo",
+      githubUrl: "https://github.com/haroon9595/TubeMind-AI-YoutubeChatbot---RAG-",
       screenshots: [],
       details: {
         problem:
@@ -422,10 +429,10 @@ export const portfolioData = {
       status: "Hackathon Entry",
       links: {
         live: undefined,
-        repo: undefined,
+        repo: "https://github.com/haroon9595/AgriScribe-Generative-AI-Project",
       },
       liveUrl: undefined,
-      githubUrl: undefined,
+      githubUrl: "https://github.com/haroon9595/AgriScribe-Generative-AI-Project",
       screenshots: [],
       details: {
         problem:
@@ -465,10 +472,10 @@ export const portfolioData = {
       status: "ML Research Project",
       links: {
         live: undefined,
-        repo: undefined,
+        repo: "https://github.com/haroon9595/Facial-emotion-detection",
       },
       liveUrl: undefined,
-      githubUrl: undefined,
+      githubUrl: "https://github.com/haroon9595/Facial-emotion-detection",
       screenshots: [],
       details: {
         problem:
@@ -508,10 +515,10 @@ export const portfolioData = {
       status: "Security Model",
       links: {
         live: undefined,
-        repo: undefined,
+        repo: "https://github.com/haroon9595/Pishing_URl_detection_System",
       },
       liveUrl: undefined,
-      githubUrl: undefined,
+      githubUrl: "https://github.com/haroon9595/Pishing_URl_detection_System",
       screenshots: [],
       details: {
         problem:
@@ -551,10 +558,10 @@ export const portfolioData = {
       status: "Data Project",
       links: {
         live: undefined,
-        repo: undefined,
+        repo: "https://github.com/haroon9595/house-price-predictor",
       },
       liveUrl: undefined,
-      githubUrl: undefined,
+      githubUrl: "https://github.com/haroon9595/house-price-predictor",
       screenshots: [],
       details: {
         problem:
