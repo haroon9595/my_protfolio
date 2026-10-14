@@ -389,6 +389,19 @@ export default function Projects() {
                       <GithubIcon size={13} />
                     </a>
                   )}
+
+                  {item.liveUrl && (
+                    <a
+                      href={item.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center p-1.5 rounded-lg text-purple-700 bg-white border border-purple-200 hover:bg-purple-50 hover:text-purple-900 transition-all focus-ring shrink-0 min-h-[30px] min-w-[30px]"
+                      aria-label={`Watch ${item.title} live demo`}
+                      title="Live Demo"
+                    >
+                      <ExternalLink size={13} aria-hidden="true" />
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

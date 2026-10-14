@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { getAllProjects, getProjectBySlug } from "@/data";
 import TechIcon from "@/components/TechIcon";
 import ProjectArchitectureDiagram from "@/components/ProjectArchitectureDiagram";
+import ProjectScreenshotSection from "@/components/ProjectScreenshotSection";
 import {
   ArrowLeft,
   ExternalLink,
@@ -216,6 +217,17 @@ export default async function ProjectDetailPage({ params }: Props) {
               ))}
             </ul>
           </section>
+        )}
+
+        {/* Live Demo Screenshot Section (e.g. WhatsApp Bot for EPADS) */}
+        {project.screenshots && project.screenshots.length > 0 && (
+          <div className="pt-2 border-t border-purple-100">
+            <ProjectScreenshotSection
+              screenshotUrl={project.screenshots[0]}
+              title="Live WhatsApp Bot Demo"
+              alt="WhatsApp tender chatbot screenshot showing SEPCO tender details reply"
+            />
+          </div>
         )}
 
         {/* Detailed Feature Highlights if present */}

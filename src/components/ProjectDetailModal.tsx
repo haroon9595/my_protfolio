@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { ProjectItem, getAllProjects } from "@/data";
 import TechIcon from "@/components/TechIcon";
 import ProjectArchitectureDiagram from "@/components/ProjectArchitectureDiagram";
+import ProjectScreenshotSection from "@/components/ProjectScreenshotSection";
 import {
   X,
   ExternalLink,
@@ -339,6 +340,17 @@ export default function ProjectDetailModal({
               </div>
             </div>
           </div>
+
+          {/* Live Demo Screenshot Section (e.g. WhatsApp Bot for EPADS) */}
+          {project.screenshots && project.screenshots.length > 0 && (
+            <div className="pt-2 border-t border-purple-100">
+              <ProjectScreenshotSection
+                screenshotUrl={project.screenshots[0]}
+                title="Live WhatsApp Bot Demo"
+                alt="WhatsApp tender chatbot screenshot showing SEPCO tender details reply"
+              />
+            </div>
+          )}
 
           {/* Detailed Feature Highlights if present */}
           {details.highlights && details.highlights.length > 0 && (

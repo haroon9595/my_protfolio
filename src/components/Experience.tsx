@@ -12,10 +12,23 @@ import {
   Award,
   Sparkles,
   ChevronDown,
+  Eye,
 } from "lucide-react";
+import ImageLightboxModal from "@/components/ImageLightboxModal";
 
 export default function Experience() {
   const [showMoreBullets, setShowMoreBullets] = useState(false);
+  const [activeLightbox, setActiveLightbox] = useState<{
+    isOpen: boolean;
+    src: string;
+    alt: string;
+    title: string;
+  }>({
+    isOpen: false,
+    src: "",
+    alt: "",
+    title: "",
+  });
 
   const deliverables = [
     {
@@ -222,6 +235,26 @@ export default function Experience() {
                         <span>{cert.highlight}</span>
                       </div>
                     )}
+                    {cert.imageUrl && (
+                      <div className="pt-2">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setActiveLightbox({
+                              isOpen: true,
+                              src: cert.imageUrl!,
+                              alt: `${cert.title} Certificate`,
+                              title: `${cert.title} — ${cert.issuer}`,
+                            })
+                          }
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold text-purple-700 bg-white border border-purple-200 hover:bg-purple-50 hover:border-purple-300 transition-all focus-ring cursor-pointer shadow-2xs"
+                          aria-label={`View ${cert.title} certificate`}
+                        >
+                          <Eye size={13} aria-hidden="true" />
+                          <span>View</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -229,6 +262,15 @@ export default function Experience() {
           </div>
         </div>
       </div>
+
+      {/* Certificate Viewer Lightbox */}
+      <ImageLightboxModal
+        isOpen={activeLightbox.isOpen}
+        onClose={() => setActiveLightbox((prev) => ({ ...prev, isOpen: false }))}
+        src={activeLightbox.src}
+        alt={activeLightbox.alt}
+        title={activeLightbox.title}
+      />
     </Section>
   );
 }

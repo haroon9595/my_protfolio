@@ -57,6 +57,7 @@ export interface AwardItem {
   issuer: string;
   date: string;
   highlight?: string;
+  imageUrl?: string;
 }
 
 export interface SkillCategory {
@@ -233,7 +234,9 @@ export const portfolioData = {
       },
       liveUrl: undefined,
       githubUrl: undefined,
-      screenshots: [],
+      screenshots: [
+        "https://res.cloudinary.com/drfnqdaqz/image/upload/v1791994918/Screenshot_2026-10-14_212104_z7hlm4.png",
+      ],
       details: {
         problem:
           "Manual browsing of Pakistan's EPADS government tender portal consumed hours before every bid — listings buried across pages, documents unread, deadlines missed.",
@@ -514,10 +517,11 @@ export const portfolioData = {
       stack: ["Python", "scikit-learn", "Feature Extraction", "Flask"],
       status: "Security Model",
       links: {
-        live: undefined,
+        live: "https://lnkd.in/p/dWv9iPWM",
         repo: "https://github.com/haroon9595/Pishing_URl_detection_System",
       },
-      liveUrl: undefined,
+      liveUrl: "https://lnkd.in/p/dWv9iPWM",
+      liveLabel: "Live Demo",
       githubUrl: "https://github.com/haroon9595/Pishing_URl_detection_System",
       screenshots: [],
       details: {
@@ -557,10 +561,11 @@ export const portfolioData = {
       stack: ["Python", "scikit-learn", "Pandas", "Streamlit"],
       status: "Data Project",
       links: {
-        live: undefined,
+        live: "https://house-price-predictor-gr3gfavbdbdnttg5x9qrxx.streamlit.app/",
         repo: "https://github.com/haroon9595/house-price-predictor",
       },
-      liveUrl: undefined,
+      liveUrl: "https://house-price-predictor-gr3gfavbdbdnttg5x9qrxx.streamlit.app/",
+      liveLabel: "Live Demo",
       githubUrl: "https://github.com/haroon9595/house-price-predictor",
       screenshots: [],
       details: {
@@ -665,12 +670,16 @@ export const portfolioData = {
       issuer: "Anthropic Education",
       date: "May 2026",
       highlight: "Advanced agentic coding & tool orchestration",
+      imageUrl:
+        "https://res.cloudinary.com/drfnqdaqz/image/upload/v1791993804/1778771922863_a9z9co.jpg",
     },
     {
       title: "Generative AI Application Developer",
       issuer: "UETIANS / HEC Pakistan / Pak Angels",
-      date: "2025",
+      date: "March 2026",
       highlight: "Top Performer in LLM system design & RAG",
+      imageUrl:
+        "https://res.cloudinary.com/drfnqdaqz/image/upload/v1791993591/1774163248005_h8jztp.jpg",
     },
     {
       title: "CM Laptop Award",
