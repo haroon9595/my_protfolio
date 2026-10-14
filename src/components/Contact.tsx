@@ -85,6 +85,10 @@ export default function Contact() {
           lookingFor: formData.lookingFor,
           message: formData.message.trim(),
           timestamp: new Date().toISOString(),
+          receivedAt: new Date().toLocaleString("en-US", {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }),
           source: "Portfolio Contact Form",
         }),
       });

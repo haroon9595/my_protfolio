@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, message } = body;
+    const { name, email, message, lookingFor } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -28,8 +28,13 @@ export async function POST(request: Request) {
           body: JSON.stringify({
             name,
             email,
+            lookingFor: lookingFor || "General Inquiry",
             message,
             timestamp: new Date().toISOString(),
+            receivedAt: new Date().toLocaleString("en-US", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            }),
             source: "Portfolio Contact Form",
           }),
         });
