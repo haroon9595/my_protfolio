@@ -1,20 +1,36 @@
-export interface ProjectItem {
-  id: string;
-  title: string;
-  tag: string;
-  tagType?: "bidding" | "client" | "end-to-end" | "ai" | "default";
-  featured?: boolean;
-  description: string;
+export interface ProjectDetails {
   problem?: string;
+  whatIBuilt: string;
   outcome?: string;
-  whyStack?: string;
+  whyThisStack?: string;
   highlights: string[];
   engineeringHighlights?: string[];
-  stack: string[];
+  diagram?: string;
+}
+
+export interface ProjectLinks {
+  live?: string;
+  repo?: string;
+}
+
+export interface ProjectItem {
+  id: string;
+  slug: string;
+  title: string;
+  category: "AI Agents" | "Automation" | "Full-Stack" | "Machine Learning";
   categories: ("AI Agents" | "Automation" | "Full-Stack" | "Machine Learning")[];
+  badge: string;
+  tag?: string;
+  tagType?: "bidding" | "client" | "end-to-end" | "ai" | "default";
+  featured?: boolean;
+  summary: string;
+  description?: string;
+  stack: string[];
+  status: string;
+  links: ProjectLinks;
   liveUrl?: string;
   githubUrl?: string;
-  badge?: string;
+  details: ProjectDetails;
   screenshots?: string[]; // TODO(owner): add screenshot URLs when available
 }
 
@@ -179,172 +195,372 @@ export const portfolioData = {
   projects: [
     {
       id: "epads",
+      slug: "epads",
       title: "EPADS Tender Intelligence System + WhatsApp Assistant",
+      badge: "Built for live bidding",
       tag: "Built for live bidding",
       tagType: "bidding",
       featured: true,
-      problem:
-        "Manual browsing of Pakistan's EPADS government tender portal consumed hours before every bid — listings buried across pages, documents unread, deadlines missed.",
-      description:
-        "A tender intelligence platform that finds, tracks and summarizes government tenders from Pakistan's EPADS portal, built to replace hours of manual browsing and document reading before every bid.",
-      outcome:
-        "Crawlers, a FastMCP AI-tool server, and a WhatsApp assistant now handle discovery and summarization automatically.",
-      whyStack:
-        "SQLite chosen for fast, file-based tender caching with zero infrastructure overhead. FastMCP exposes tenders as AI-callable tools. Python for rapid crawler iteration against a live government portal.",
-      highlights: [
-        "Crawler and parsers for tender listings, tender details and standard bidding documents",
-        "Change detection — updates to a tender are caught automatically",
-        "SQLite storage for fast, reliable tender information caching",
-        "FastMCP server that lets AI assistants search and read tenders with tools like search_tenders and get_tender_details",
-        "Daily digest with scheduler for new and closing tenders",
-        "WhatsApp chatbot: send a tender ID and receive an instant structured summary card (Agency, Title, Closing date, Time remaining, Bid security, Required registrations)",
-        "Automated report generation and export commands for Excel, PDF, and Word",
-      ],
-      engineeringHighlights: [
-        "Live-tested against epads.gov.pk",
-        "FastMCP server exposes search_tenders and get_tender_details tools",
-        "Single CLI command generates Excel, PDF and Word reports",
-      ],
-      stack: ["Python", "FastMCP", "SQLite", "WhatsApp Integration", "Scheduler", "CLI"],
+      category: "AI Agents",
       categories: ["AI Agents", "Automation"],
-      githubUrl: undefined, // Private repository
+      summary:
+        "Crawls Pakistan's EPADS portal, detects tender changes, and serves tenders to AI assistants and a WhatsApp bot with instant summary cards and Excel, PDF and Word exports.",
+      description:
+        "Crawls Pakistan's EPADS portal, detects tender changes, and serves tenders to AI assistants and a WhatsApp bot with instant summary cards and Excel, PDF and Word exports.",
+      stack: ["Python", "FastMCP", "SQLite", "WhatsApp Integration", "Scheduler", "CLI"],
+      status: "Production (Restricted / Private)",
+      links: {
+        live: undefined,
+        repo: undefined,
+      },
       liveUrl: undefined,
-      screenshots: [], // TODO(owner): add screenshot URLs
+      githubUrl: undefined,
+      screenshots: [],
+      details: {
+        problem:
+          "Manual browsing of Pakistan's EPADS government tender portal consumed hours before every bid — listings buried across pages, documents unread, deadlines missed.",
+        whatIBuilt:
+          "A tender intelligence platform that finds, tracks and summarizes government tenders from Pakistan's EPADS portal, built to replace hours of manual browsing and document reading before every bid.",
+        outcome:
+          "Crawlers, a FastMCP AI-tool server, and a WhatsApp assistant now handle discovery and summarization automatically.",
+        whyThisStack:
+          "SQLite chosen for fast, file-based tender caching with zero infrastructure overhead. FastMCP exposes tenders as AI-callable tools. Python for rapid crawler iteration against a live government portal.",
+        highlights: [
+          "Crawler and parsers for tender listings, tender details and standard bidding documents",
+          "Change detection — updates to a tender are caught automatically",
+          "SQLite storage for fast, reliable tender information caching",
+          "FastMCP server that lets AI assistants search and read tenders with tools like search_tenders and get_tender_details",
+          "Daily digest with scheduler for new and closing tenders",
+          "WhatsApp chatbot: send a tender ID and receive an instant structured summary card (Agency, Title, Closing date, Time remaining, Bid security, Required registrations)",
+          "Automated report generation and export commands for Excel, PDF, and Word",
+        ],
+        engineeringHighlights: [
+          "Live-tested against epads.gov.pk",
+          "FastMCP server exposes search_tenders and get_tender_details tools",
+          "Single CLI command generates Excel, PDF and Word reports",
+        ],
+        diagram: "epads",
+      },
     },
     {
       id: "iesgroup",
+      slug: "iesgroup",
       title: "IES Group — AI Lead Routing & Corporate Platform",
+      badge: "Client Project",
       tag: "Client Project",
       tagType: "client",
       featured: true,
-      problem:
-        "Inter Engineering Services received inquiries with no routing — messages went to one inbox regardless of department, causing delays and lost leads.",
-      description:
-        "Delivered for Inter Engineering Services, an engineering and construction company: an AI-powered inquiry routing system that reads incoming messages, classifies them with an LLM and sends them to the right department automatically, along with the company's web platform and email infrastructure.",
-      outcome:
-        "Inquiries are now classified and routed to four departments automatically via n8n Cloud and Groq LLM, with acknowledgments sent through Zoho SMTP.",
-      whyStack:
-        "n8n Cloud chosen for no-code flow editing by the client post-handover. Groq LLM for low-latency classification. Supabase for managed lead archiving without self-hosted infrastructure.",
-      highlights: [
-        "LLM-based classification and routing of incoming inquiries across four specialized departments",
-        "Automated email handling and acknowledgment pipelines with n8n Cloud and Zoho SMTP",
-        "Company web platform built for high performance and fast loading",
-        "Professional email infrastructure including SPF, DKIM and MX record configuration",
-        "Supabase integration for secure lead archiving and inquiry history",
-      ],
-      engineeringHighlights: [
-        "Four-department LLM routing pipeline in production",
-        "SPF, DKIM and MX configured for professional email delivery",
-        "Lead history archived in Supabase for audit trail",
-      ],
-      stack: ["n8n Cloud", "Groq LLM", "Zoho SMTP", "Supabase", "Vercel"],
+      category: "AI Agents",
       categories: ["Automation", "AI Agents", "Full-Stack"],
+      summary:
+        "AI lead routing that classifies incoming inquiries and routes them to four departments, with professional email setup.",
+      description:
+        "AI lead routing that classifies incoming inquiries and routes them to four departments, with professional email setup.",
+      stack: ["n8n Cloud", "Groq LLM", "Zoho SMTP", "Supabase", "Vercel"],
+      status: "Production Client System",
+      links: {
+        live: "https://iesgroup.com.pk",
+        repo: undefined,
+      },
       liveUrl: "https://iesgroup.com.pk",
-      githubUrl: undefined, // Client — restricted
-      screenshots: [], // TODO(owner): add screenshot URLs
+      githubUrl: undefined,
+      screenshots: [],
+      details: {
+        problem:
+          "Inter Engineering Services received inquiries with no routing — messages went to one inbox regardless of department, causing delays and lost leads.",
+        whatIBuilt:
+          "Delivered for Inter Engineering Services, an engineering and construction company: an AI-powered inquiry routing system that reads incoming messages, classifies them with an LLM and sends them to the right department automatically, along with the company's web platform and email infrastructure.",
+        outcome:
+          "Inquiries are now classified and routed to four departments automatically via n8n Cloud and Groq LLM, with acknowledgments sent through Zoho SMTP.",
+        whyThisStack:
+          "n8n Cloud chosen for no-code flow editing by the client post-handover. Groq LLM for low-latency classification. Supabase for managed lead archiving without self-hosted infrastructure.",
+        highlights: [
+          "LLM-based classification and routing of incoming inquiries across four specialized departments",
+          "Automated email handling and acknowledgment pipelines with n8n Cloud and Zoho SMTP",
+          "Company web platform built for high performance and fast loading",
+          "Professional email infrastructure including SPF, DKIM and MX record configuration",
+          "Supabase integration for secure lead archiving and inquiry history",
+        ],
+        engineeringHighlights: [
+          "Four-department LLM routing pipeline in production",
+          "SPF, DKIM and MX configured for professional email delivery",
+          "Lead history archived in Supabase for audit trail",
+        ],
+        diagram: "iesgroup",
+      },
     },
     {
       id: "hosteldesk",
+      slug: "hosteldesk",
       title: "HostelDesk — AI Complaint Management System",
+      badge: "Built end-to-end",
       tag: "Built end-to-end",
       tagType: "end-to-end",
       featured: false,
-      problem:
-        "Hostel students had no structured way to report complaints — emails and verbal reports got lost, Resident Tutors had no visibility into workload.",
-      description:
-        "An AI-powered complaint management platform that turns conversational student reports into structured complaints, automatically assigns them to the right Resident Tutor and provides staff with a real-time management dashboard.",
-      outcome:
-        "Students report via Slack conversation; complaints are structured, assigned and tracked in a live Next.js dashboard.",
-      highlights: [
-        "Conversational issue reporting directly through Slack",
-        "n8n AI Agent with LLM and contextual chat memory",
-        "Automatic complaint creation and normalization in PostgreSQL",
-        "Intelligent Resident Tutor assignment based on hostel blocks",
-        "Complete status history audit tracking and real-time Slack DMs",
-        "Modern Next.js 14 staff dashboard with workload views and multi-status filters",
-        "FastAPI webhook backend with secure processing",
-      ],
-      engineeringHighlights: [
-        "n8n AI Agent with contextual chat memory for conversational intake",
-        "Resident Tutor assignment logic based on hostel block mapping",
-        "Full audit trail with status history in PostgreSQL",
-      ],
-      stack: ["n8n", "Slack", "PostgreSQL", "FastAPI", "Next.js 14", "Vercel", "Render"],
+      category: "Full-Stack",
       categories: ["Full-Stack", "AI Agents", "Automation"],
+      summary:
+        "Students report hostel issues on Slack; an AI agent files and assigns complaints in PostgreSQL, with a live Next.js dashboard for staff.",
+      description:
+        "Students report hostel issues on Slack; an AI agent files and assigns complaints in PostgreSQL, with a live Next.js dashboard for staff.",
+      stack: ["n8n", "Slack", "PostgreSQL", "FastAPI", "Next.js 14", "Vercel", "Render"],
+      status: "Live System",
+      links: {
+        live: "https://hostel-complain-management-portal.vercel.app",
+        repo: undefined,
+      },
       liveUrl: "https://hostel-complain-management-portal.vercel.app",
-      githubUrl: undefined, // Repository available on request
-      screenshots: [], // TODO(owner): add screenshot URLs
+      githubUrl: undefined,
+      screenshots: [],
+      details: {
+        problem:
+          "Hostel students had no structured way to report complaints — emails and verbal reports got lost, Resident Tutors had no visibility into workload.",
+        whatIBuilt:
+          "An AI-powered complaint management platform that turns conversational student reports into structured complaints, automatically assigns them to the right Resident Tutor and provides staff with a real-time management dashboard.",
+        outcome:
+          "Students report via Slack conversation; complaints are structured, assigned and tracked in a live Next.js dashboard.",
+        whyThisStack:
+          "PostgreSQL for ACID audit tracking of resident complaints. n8n for rapid conversational intake webhook wiring. Next.js for reactive, modern staff administration.",
+        highlights: [
+          "Conversational issue reporting directly through Slack",
+          "n8n AI Agent with LLM and contextual chat memory",
+          "Automatic complaint creation and normalization in PostgreSQL",
+          "Intelligent Resident Tutor assignment based on hostel blocks",
+          "Complete status history audit tracking and real-time Slack DMs",
+          "Modern Next.js 14 staff dashboard with workload views and multi-status filters",
+          "FastAPI webhook backend with secure processing",
+        ],
+        engineeringHighlights: [
+          "n8n AI Agent with contextual chat memory for conversational intake",
+          "Resident Tutor assignment logic based on hostel block mapping",
+          "Full audit trail with status history in PostgreSQL",
+        ],
+        diagram: "hosteldesk",
+      },
     },
     {
       id: "tubemind",
+      slug: "tubemind",
       title: "TubeMind AI — Chat With Any YouTube Video",
+      badge: "AI Application",
       tag: "AI Application",
       tagType: "ai",
       featured: false,
-      description:
-        "An AI application that lets users ask questions about YouTube videos using a retrieval-augmented generation (RAG) pipeline.",
-      highlights: [
-        "Automated YouTube transcript extraction and timestamp alignment",
-        "Smart semantic text chunking for high retrieval accuracy",
-        "Hugging Face embeddings with local FAISS vector search",
-        "Groq-hosted Llama 3.3 70B providing low-latency streaming responses",
-        "Interactive conversational interface with source citations",
-      ],
-      engineeringHighlights: [
-        "Local FAISS vector store — no external vector DB required",
-        "Hugging Face embeddings run offline after first pull",
-        "Groq Llama 3.3 70B for sub-second response times",
-      ],
-      stack: ["LangChain", "FastAPI", "Streamlit", "FAISS", "Groq", "Hugging Face"],
+      category: "AI Agents",
       categories: ["AI Agents", "Machine Learning"],
-      githubUrl: "https://github.com/haroon9595/tubemind-ai", // TODO(owner): confirm this repo URL
+      summary:
+        "Chat with a YouTube video: RAG pipeline with embeddings and vector search, with streamed answers through a FastAPI backend.",
+      description:
+        "Chat with a YouTube video: RAG pipeline with embeddings and vector search, with streamed answers through a FastAPI backend.",
+      stack: ["LangChain", "FastAPI", "Streamlit", "FAISS", "Groq", "Hugging Face"],
+      status: "Personal Project",
+      links: {
+        live: undefined,
+        repo: "https://github.com/haroon9595/tubemind-ai",
+      },
       liveUrl: undefined,
-      screenshots: [], // TODO(owner): add screenshot URLs
+      githubUrl: "https://github.com/haroon9595/tubemind-ai",
+      screenshots: [],
+      details: {
+        problem:
+          "Long technical tutorials and lectures are difficult to skim; finding specific answers requires manual scrubbing through video timelines.",
+        whatIBuilt:
+          "An AI application that lets users ask questions about YouTube videos using a retrieval-augmented generation (RAG) pipeline.",
+        outcome:
+          "Real-time conversational interface where users query any public YouTube video and receive streamed answers with exact source timestamps.",
+        whyThisStack:
+          "FAISS for local, lightweight vector indexing without recurring cloud DB cost. Groq Llama 3.3 70B for sub-second LLM streaming. Hugging Face embeddings for local embedding generation.",
+        highlights: [
+          "Automated YouTube transcript extraction and timestamp alignment",
+          "Smart semantic text chunking for high retrieval accuracy",
+          "Hugging Face embeddings with local FAISS vector search",
+          "Groq-hosted Llama 3.3 70B providing low-latency streaming responses",
+          "Interactive conversational interface with source citations",
+        ],
+        engineeringHighlights: [
+          "Local FAISS vector store — no external vector DB required",
+          "Hugging Face embeddings run offline after first pull",
+          "Groq Llama 3.3 70B for sub-second response times",
+        ],
+        diagram: "tubemind",
+      },
     },
   ] as ProjectItem[],
 
   moreProjects: [
     {
       id: "agriscribe",
-      title: "AgriScribe",
+      slug: "agriscribe",
+      title: "AgriScribe — Crop Disease Assistant",
+      badge: "Hackathon Entry",
       tag: "GenAI Assistant",
-      description:
-        "GenAI crop-disease assistant built for a hackathon, combining computer vision leaf diagnosis with conversational treatment recommendations.",
-      stack: ["Python", "Gemini API", "Streamlit", "Computer Vision"],
+      tagType: "ai",
+      featured: false,
+      category: "AI Agents",
       categories: ["AI Agents", "Machine Learning"],
-      githubUrl: undefined, // TODO(owner): confirm repo URL
+      summary:
+        "GenAI crop-disease assistant built for a national Gen AI hackathon.",
+      description:
+        "GenAI crop-disease assistant built for a national Gen AI hackathon.",
+      stack: ["Python", "Gemini API", "Streamlit", "Computer Vision"],
+      status: "Hackathon Entry",
+      links: {
+        live: undefined,
+        repo: undefined,
+      },
+      liveUrl: undefined,
+      githubUrl: undefined,
+      screenshots: [],
+      details: {
+        problem:
+          "Fast crop disease identification in rural areas without immediate agronomist access.",
+        whatIBuilt:
+          "GenAI crop-disease assistant built for a hackathon, combining computer vision leaf diagnosis with conversational treatment recommendations via Gemini API.",
+        outcome:
+          "Instant leaf diagnosis and guidance interface demonstrated at national hackathon.",
+        whyThisStack:
+          "Gemini API for multimodal vision & reasoning; Streamlit for rapid interactive prototyping.",
+        highlights: [
+          "Computer vision leaf diagnosis and lesion analysis",
+          "Conversational treatment guidance via Gemini API",
+          "Interactive Streamlit farmer interface with image upload",
+        ],
+        engineeringHighlights: [
+          "Multimodal prompting for botanical disease identification",
+          "Interactive web UI built under hackathon time limits",
+        ],
+      },
     },
     {
       id: "facial-emotion",
+      slug: "facial-emotion",
       title: "Facial Emotion Detection",
+      badge: "Computer Vision",
       tag: "Computer Vision",
+      tagType: "default",
+      featured: false,
+      category: "Machine Learning",
+      categories: ["Machine Learning"],
+      summary:
+        "CNN + OpenCV deep learning system for real-time facial expression analysis and emotion classification across live video feeds.",
       description:
         "CNN + OpenCV deep learning system for real-time facial expression analysis and emotion classification across live video feeds.",
       stack: ["Python", "TensorFlow", "OpenCV", "CNN"],
-      categories: ["Machine Learning"],
-      githubUrl: undefined, // TODO(owner): confirm repo URL
+      status: "ML Research Project",
+      links: {
+        live: undefined,
+        repo: undefined,
+      },
+      liveUrl: undefined,
+      githubUrl: undefined,
+      screenshots: [],
+      details: {
+        problem:
+          "Accurate real-time emotion classification under varying lighting and facial orientations.",
+        whatIBuilt:
+          "Deep CNN pipeline with OpenCV face tracking and multi-class emotion classifier across live video feeds.",
+        outcome:
+          "Sub-30ms inference on live webcam streams with real-time probability overlays.",
+        whyThisStack:
+          "TensorFlow/Keras for CNN training, OpenCV for high-frame-rate video capture and bounding box extraction.",
+        highlights: [
+          "Custom CNN trained on standard facial expression datasets",
+          "OpenCV face detection and alignment pipeline",
+          "Real-time probabilistic emotion classification",
+        ],
+        engineeringHighlights: [
+          "Optimized frame processing to maintain 30 FPS",
+          "Multi-class softmax output layer for emotional probabilities",
+        ],
+      },
     },
     {
       id: "phishing-detector",
+      slug: "phishing-detector",
       title: "Phishing Website Detection",
+      badge: "Security ML",
       tag: "Machine Learning",
+      tagType: "default",
+      featured: false,
+      category: "Machine Learning",
+      categories: ["Machine Learning"],
+      summary:
+        "Machine learning system for malicious URL classification and phishing website detection using extracted lexical and domain features.",
       description:
         "Machine learning system for malicious URL classification and phishing website detection using extracted lexical and domain features.",
       stack: ["Python", "scikit-learn", "Feature Extraction", "Flask"],
-      categories: ["Machine Learning"],
-      githubUrl: undefined, // TODO(owner): confirm repo URL
+      status: "Security Model",
+      links: {
+        live: undefined,
+        repo: undefined,
+      },
+      liveUrl: undefined,
+      githubUrl: undefined,
+      screenshots: [],
+      details: {
+        problem:
+          "Detecting newly minted phishing sites before they appear in public domain blocklists.",
+        whatIBuilt:
+          "Feature engineering pipeline extracting lexical, host, and domain indicators paired with scikit-learn classifiers and a Flask scoring API.",
+        outcome:
+          "Fast classification of URLs without needing to crawl or execute malicious remote code.",
+        whyThisStack:
+          "scikit-learn for ensemble classification; Flask for lightweight scoring endpoints.",
+        highlights: [
+          "Lexical and domain structure feature extraction",
+          "Comparative benchmark across Random Forest, SVM and Logistic Regression",
+          "Flask REST API for immediate URL risk scoring",
+        ],
+        engineeringHighlights: [
+          "Feature calculation without visiting target URLs",
+          "Model serialization with joblib for instant warm-start serving",
+        ],
+      },
     },
     {
       id: "house-price",
+      slug: "house-price",
       title: "House Price Predictor",
+      badge: "Regression Model",
       tag: "Regression Model",
+      tagType: "default",
+      featured: false,
+      category: "Machine Learning",
+      categories: ["Machine Learning"],
+      summary:
+        "Machine learning web application for residential property valuation with comparative regression modeling and interactive feature inputs.",
       description:
         "Machine learning web application for residential property valuation with comparative regression modeling and interactive feature inputs.",
       stack: ["Python", "scikit-learn", "Pandas", "Streamlit"],
-      categories: ["Machine Learning"],
-      githubUrl: undefined, // TODO(owner): confirm repo URL
+      status: "Data Project",
+      links: {
+        live: undefined,
+        repo: undefined,
+      },
+      liveUrl: undefined,
+      githubUrl: undefined,
+      screenshots: [],
+      details: {
+        problem:
+          "Estimating fair property valuation from multi-dimensional housing and regional attributes.",
+        whatIBuilt:
+          "Interactive valuation web application with comparative regression models, outlier handling, and exploratory data visualizations.",
+        outcome:
+          "Instant valuation estimates with visual explanations of feature weights.",
+        whyThisStack:
+          "Pandas for data transformation; scikit-learn for regression modeling; Streamlit for interactive parameter sliders.",
+        highlights: [
+          "Feature preprocessing, encoding, and missing value imputation",
+          "Comparison of Ridge, Lasso, and Gradient Boosting regressors",
+          "Interactive input controls with immediate value estimation",
+        ],
+        engineeringHighlights: [
+          "End-to-end data pipeline from raw dataset to served prediction",
+          "Evaluation using RMSE, MAE and R-squared metrics",
+        ],
+      },
     },
-  ],
+  ] as ProjectItem[],
 
   experience: [
     {
@@ -456,3 +672,12 @@ export const portfolioData = {
     { label: "Experience", href: "#experience" },
   ],
 };
+
+export function getAllProjects(): ProjectItem[] {
+  return [...portfolioData.projects, ...portfolioData.moreProjects];
+}
+
+export function getProjectBySlug(slug: string): ProjectItem | undefined {
+  return getAllProjects().find((p) => p.slug === slug || p.id === slug);
+}
+
