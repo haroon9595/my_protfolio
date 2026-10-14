@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
-import { Award, Trophy, CheckCircle, Calendar } from "lucide-react";
+import { Award, Trophy, Calendar } from "lucide-react";
 
 export default function Certifications() {
   return (

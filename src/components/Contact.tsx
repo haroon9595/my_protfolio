@@ -87,10 +87,10 @@ export default function Contact() {
         origin: { y: 0.7 },
         colors: ["#7C3AED", "#A78BFA", "#C4B5FD", "#3B82F6"],
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus("error");
       setErrorMessage(
-        err.message || "An unexpected error occurred. Please reach out directly."
+        err instanceof Error ? err.message : "An unexpected error occurred. Please reach out directly."
       );
     }
   };

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { portfolioData, ProjectItem } from "@/data";
+import { portfolioData } from "@/data";
 import {
   ExternalLink,
   CheckCircle2,
@@ -37,13 +37,13 @@ export default function Projects() {
   // Filter primary projects
   const filteredProjects = portfolioData.projects.filter((p) => {
     if (activeFilter === "All") return true;
-    return p.categories.includes(activeFilter as any);
+    return (p.categories as readonly string[]).includes(activeFilter);
   });
 
   // Filter more projects
   const filteredMoreProjects = portfolioData.moreProjects.filter((p) => {
     if (activeFilter === "All") return true;
-    return p.categories.includes(activeFilter as any);
+    return (p.categories as readonly string[]).includes(activeFilter);
   });
 
   const getTagBadge = (tag: string, tagType?: string) => {

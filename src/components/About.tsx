@@ -85,37 +85,17 @@ export default function About() {
               {portfolioData.about.quickFacts.map((fact) => (
                 <div
                   key={fact.label}
-                  className={`rounded-2xl p-4 transition-all duration-200 border ${
-                    fact.secondary
-                      ? "bg-zinc-50/60 border-zinc-200/60 text-zinc-500 py-3 text-xs"
-                      : "bg-white border-purple-100 hover:border-[#7C3AED]/30 hover:shadow-md hover:shadow-purple-500/5 shadow-xs"
-                  }`}
+                  className="rounded-2xl p-4 transition-all duration-200 border bg-white border-purple-100 hover:border-purple-300 hover:shadow-md hover:shadow-purple-500/5 shadow-xs"
                 >
                   <div className="flex items-start gap-3.5">
-                    <div
-                      className={`p-2.5 rounded-xl ${
-                        fact.secondary
-                          ? "bg-zinc-100"
-                          : "bg-purple-50 text-[#7C3AED]"
-                      }`}
-                    >
+                    <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600">
                       {getIcon(fact.icon)}
                     </div>
                     <div>
-                      <div
-                        className={`text-xs font-semibold ${
-                          fact.secondary ? "text-zinc-400" : "text-zinc-500"
-                        }`}
-                      >
+                      <div className="text-xs font-semibold text-zinc-500">
                         {fact.label}
                       </div>
-                      <div
-                        className={`font-semibold tracking-tight ${
-                          fact.secondary
-                            ? "text-zinc-600 text-xs mt-0.5"
-                            : "text-[#0F0F14] text-base mt-0.5"
-                        }`}
-                      >
+                      <div className="font-semibold tracking-tight text-[#0F0F14] text-sm sm:text-base mt-0.5">
                         {fact.value}
                       </div>
                     </div>

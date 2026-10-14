@@ -9,13 +9,18 @@ import {
   Sparkles,
   Minimize2,
   Loader2,
-  CornerDownLeft,
 } from "lucide-react";
 
 interface ChatMessage {
   id: string;
   role: "user" | "assistant";
   content: string;
+}
+
+let msgIdCounter = 0;
+function createMessageId(prefix: string): string {
+  msgIdCounter += 1;
+  return `${prefix}-${msgIdCounter}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
 const SUGGESTED_PROMPTS = [
@@ -68,7 +73,7 @@ export default function AIChatbot() {
     if (!textToSend.trim() || isLoading) return;
 
     const userMessage: ChatMessage = {
-      id: Date.now().toString(),
+      id: createMessageId("user"),
       role: "user",
       content: textToSend.trim(),
     };
@@ -124,7 +129,7 @@ export default function AIChatbot() {
       setMessages((prev) => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: createMessageId("assistant"),
           role: "assistant",
           content: assistantAnswer.trim(),
         },
@@ -134,7 +139,7 @@ export default function AIChatbot() {
       setMessages((prev) => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: createMessageId("error"),
           role: "assistant",
           content:
             "Sorry, I'm having trouble connecting right now. Please try again or contact Haroon directly.",

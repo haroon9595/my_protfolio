@@ -6,7 +6,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
 import {
-  Code2,
   Terminal,
   Download,
   Send,
@@ -217,11 +216,11 @@ export default function Hero() {
                   <Layers size={22} />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-black text-[#0F0F14] tracking-tight leading-none">
-                    {portfolioData.personal.stats.number}
+                  <div className="text-sm font-bold text-[#0F0F14] tracking-tight leading-snug">
+                    Live Deployments
                   </div>
-                  <div className="text-[11px] sm:text-xs font-semibold text-zinc-500 mt-1 whitespace-nowrap">
-                    {portfolioData.personal.stats.label}
+                  <div className="text-[11px] sm:text-xs font-semibold text-purple-700 mt-0.5 whitespace-nowrap">
+                    EPADS · IES · HostelDesk
                   </div>
                 </div>
               </motion.div>
