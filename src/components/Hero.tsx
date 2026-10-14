@@ -5,16 +5,36 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
+import TechIcon from "@/components/TechIcon";
 import {
-  Terminal,
   Download,
   Send,
   Mail,
   Layers,
   Phone,
-  Sparkles,
+  Award,
+  ArrowRight,
+  ShieldCheck,
+  Building2,
+  Workflow,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+
+// 12 Key technologies for the infinite logo marquee
+const MARQUEE_TECH = [
+  "Python",
+  "FastAPI",
+  "Next.js",
+  "n8n",
+  "PostgreSQL",
+  "Docker",
+  "LangChain",
+  "Supabase",
+  "Hugging Face",
+  "Tailwind CSS",
+  "React",
+  "SQLite",
+];
 
 export default function Hero() {
   const titles = portfolioData.personal.roleTitles;
@@ -22,14 +42,14 @@ export default function Hero() {
   const [displayText, setDisplayText] = useState(portfolioData.personal.roleTitles[0]);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Typing animation effect
+  // Typing animation effect with reserved height to prevent CLS
   useEffect(() => {
     const currentTitle = titles[currentTitleIndex];
-    const typingSpeed = isDeleting ? 40 : 80;
+    const typingSpeed = isDeleting ? 35 : 75;
 
     const timer = setTimeout(() => {
       if (!isDeleting && displayText === currentTitle) {
-        setTimeout(() => setIsDeleting(true), 1600);
+        setTimeout(() => setIsDeleting(true), 2000);
       } else if (isDeleting && displayText === "") {
         setIsDeleting(false);
         setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
@@ -48,244 +68,319 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-[#FAF9FF]"
+      className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-white"
     >
-      {/* Subtle ambient background glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-200/30 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Decorative ambient background: faint grid + soft gradient blobs (aria-hidden) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none -z-10 overflow-hidden"
+      >
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(#E9D5FF_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
+        <div className="absolute top-16 left-1/4 w-[450px] h-[450px] bg-purple-200/35 rounded-full blur-3xl" />
+        <div className="absolute top-48 right-1/4 w-[400px] h-[400px] bg-indigo-100/40 rounded-full blur-3xl" />
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* Left Column: Bio & Calls to Action */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-6 space-y-6 text-left"
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-7 space-y-5 text-left"
           >
-            {/* Small purple badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#7C3AED]/10 text-[#7C3AED] text-xs font-semibold tracking-wide shadow-xs">
-              <Sparkles size={13} className="text-[#7C3AED]" />
+            {/* Eyebrow badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-purple-700 text-xs font-semibold tracking-wide shadow-xs">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-600"></span>
+              </span>
               <span>{portfolioData.personal.heroBadge}</span>
             </div>
 
-            {/* Main Heading */}
-            <div className="space-y-1">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0F0F14] tracking-tight leading-[1.12]">
-                Hello, I&apos;m{" "}
-                <span className="block mt-1 text-[#0F0F14]">
-                  Muhammad Haroon Rashid
-                </span>
+            {/* Main Heading: Clamp typography to guarantee max 2 lines */}
+            <div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0F0F14] tracking-tight leading-[1.15]">
+                Muhammad Haroon Rashid
               </h1>
 
-              {/* Typing Animation Subtitle */}
-              <div className="pt-2 flex items-center min-h-[36px]">
-                <span className="text-lg sm:text-2xl font-bold text-[#7C3AED] font-mono">
-                  {displayText}
+              {/* Typed Role Line with reserved height to eliminate CLS */}
+              <div className="pt-2 h-9 flex items-center">
+                <span className="text-xl sm:text-2xl font-bold text-purple-600 font-mono tracking-tight">
+                  {displayText || portfolioData.personal.roleTitles[0]}
                 </span>
-                <span className="inline-block w-0.5 h-6 ml-1 bg-[#7C3AED] animate-pulse" />
+                <span
+                  className="inline-block w-0.5 h-6 ml-1 bg-purple-600 animate-pulse"
+                  aria-hidden="true"
+                />
               </div>
             </div>
 
-            {/* Paragraph */}
+            {/* Sub-line: mentions EPADS + IES directly */}
             <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-xl">
               {portfolioData.personal.heroBio}
             </p>
 
-            {/* Buttons: Hire Me & Download CV */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            {/* Primary & Secondary CTAs */}
+            <div className="pt-2 flex flex-wrap items-center gap-3.5">
               <Link
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/35 hover:-translate-y-0.5 transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all duration-200 focus-ring"
               >
                 <span>Hire Me</span>
-                <Send size={16} />
+                <Send size={15} aria-hidden="true" />
               </Link>
 
               <a
                 href={portfolioData.personal.cvPath}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#7C3AED] bg-white border-2 border-[#7C3AED] hover:bg-purple-50 hover:-translate-y-0.5 transition-all duration-200 shadow-sm"
+                download
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-purple-700 bg-white border border-purple-300 hover:bg-purple-50 hover:border-purple-400 hover:-translate-y-0.5 transition-all duration-200 shadow-xs focus-ring"
               >
                 <span>Download CV</span>
-                <Download size={16} />
+                <Download size={15} aria-hidden="true" />
               </a>
-            </div>
 
-            {/* Social Links */}
-            <div className="pt-4 flex items-center gap-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-                Connect:
-              </span>
-              <div className="flex items-center gap-2.5">
+              {/* Tertiary Icon Buttons with Tooltips */}
+              <div className="flex items-center gap-2 pl-1">
                 <a
                   href={portfolioData.personal.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-[#7C3AED] hover:border-[#7C3AED] hover:shadow-md transition-all duration-200"
-                  aria-label="GitHub"
+                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  aria-label="GitHub Profile (haroon9595)"
+                  title="GitHub Profile"
                 >
-                  <GithubIcon size={18} />
+                  <GithubIcon size={17} />
                 </a>
 
                 <a
                   href={portfolioData.personal.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-[#7C3AED] hover:border-[#7C3AED] hover:shadow-md transition-all duration-200"
-                  aria-label="LinkedIn"
+                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  aria-label="LinkedIn Profile"
+                  title="LinkedIn Profile"
                 >
-                  <LinkedinIcon size={18} />
+                  <LinkedinIcon size={17} />
                 </a>
 
                 <a
                   href={`mailto:${portfolioData.personal.email}`}
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-[#7C3AED] hover:border-[#7C3AED] hover:shadow-md transition-all duration-200"
-                  aria-label="Email"
+                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-purple-600 hover:border-purple-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  aria-label="Send Email"
+                  title="Email Haroon"
                 >
-                  <Mail size={18} />
+                  <Mail size={17} />
                 </a>
 
                 <a
                   href={portfolioData.personal.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-emerald-600 hover:border-emerald-500 hover:shadow-md transition-all duration-200"
-                  aria-label="WhatsApp"
+                  className="w-10 h-10 rounded-full bg-white border border-purple-100 flex items-center justify-center text-zinc-700 hover:text-emerald-600 hover:border-emerald-300 hover:shadow-sm transition-all duration-200 focus-ring"
+                  aria-label="WhatsApp Chat"
+                  title="Chat on WhatsApp"
                 >
-                  <Phone size={18} />
+                  <Phone size={17} />
                 </a>
               </div>
             </div>
           </motion.div>
 
-          {/* Right Column: Circular Profile Composition & Floating Cards */}
-          <div className="lg:col-span-6 relative flex justify-center items-center py-6">
-            <div className="relative w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] md:w-[460px] md:h-[460px] flex items-center justify-center">
-              {/* Soft purple gradient background circle behind photo */}
-              <div className="absolute inset-2 sm:inset-4 rounded-full bg-gradient-to-tr from-[#DDD6FE] via-[#EDE9FE] to-[#F5F3FF] shadow-inner" />
-
-              {/* Decorative floating purple dots */}
-              <div className="absolute top-8 left-4 w-3.5 h-3.5 rounded-full bg-[#7C3AED] opacity-80 animate-ping" />
-              <div className="absolute top-1/2 -left-6 w-2.5 h-2.5 rounded-full bg-[#C4B5FD]" />
-              <div className="absolute bottom-8 right-2 w-5 h-5 rounded-full bg-[#A78BFA] opacity-75" />
-              <div className="absolute -top-3 right-16 w-3 h-3 rounded-full bg-[#7C3AED]/50" />
-
-              {/* Top-Left Diamond Badge (Code/Terminal instead of WordPress) */}
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.3, type: "spring" }}
-                className="absolute top-6 left-6 z-20"
-              >
-                <div className="w-12 h-12 bg-gradient-to-tr from-[#7C3AED] to-[#9333EA] rounded-2xl rotate-45 flex items-center justify-center shadow-lg shadow-purple-500/30 border-2 border-white">
-                  <div className="-rotate-45 text-white flex items-center justify-center">
-                    <Terminal size={20} strokeWidth={2.5} />
-                  </div>
-                </div>
-              </motion.div>
+          {/* Right Column: Circular Profile Hero & Floating Cards */}
+          <div className="lg:col-span-5 relative flex justify-center items-center py-4">
+            <div className="relative w-[300px] h-[300px] sm:w-[360px] sm:h-[360px] md:w-[390px] md:h-[390px] flex items-center justify-center">
+              {/* Soft purple gradient ring & background behind photo */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-1 rounded-full bg-gradient-to-tr from-purple-200 via-purple-100 to-indigo-50 shadow-inner"
+              />
 
               {/* Circular Cropped Profile Image */}
-              <div
-                style={{ position: "relative" }}
-                className="relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] md:w-[410px] md:h-[410px] rounded-full overflow-hidden border-[6px] border-white shadow-2xl shadow-purple-950/15 bg-gradient-to-b from-purple-100/50 to-white"
-              >
+              <div className="relative w-[270px] h-[270px] sm:w-[325px] sm:h-[325px] md:w-[355px] md:h-[355px] rounded-full overflow-hidden border-4 border-white shadow-xl shadow-purple-950/10 bg-gradient-to-b from-purple-100 to-white">
                 <Image
                   src={portfolioData.personal.profileImage}
-                  alt={portfolioData.personal.name}
+                  alt="Muhammad Haroon Rashid - Full-Stack & AI Agent Developer"
                   fill
                   priority
-                  sizes="(max-width: 640px) 300px, (max-width: 768px) 380px, 410px"
+                  sizes="(max-width: 640px) 270px, (max-width: 768px) 325px, 355px"
                   className="object-cover object-top select-none scale-105"
                 />
               </div>
 
-              {/* Floating Card 1: Top-Right "4+ Systems built" */}
-              <motion.div
-                animate={{
-                  y: [0, -8, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute -top-2 -right-4 sm:-right-8 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 shadow-xl shadow-purple-900/10 border border-purple-100 flex items-center gap-3.5 hover:shadow-2xl transition-shadow"
-              >
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#7C3AED] to-[#9333EA] flex items-center justify-center text-white shadow-md shadow-purple-500/30">
-                  <Layers size={22} />
+              {/* Card A (Top-Right): Verifiable live deployments */}
+              <div className="absolute -top-3 -right-3 sm:-right-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-lg shadow-purple-900/10 border border-purple-100 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white shadow-xs">
+                  <Layers size={18} aria-hidden="true" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-[#0F0F14] tracking-tight leading-snug">
-                    Live Deployments
+                  <div className="text-xs font-bold text-[#0F0F14] tracking-tight leading-none">
+                    Live Systems
                   </div>
-                  <div className="text-[11px] sm:text-xs font-semibold text-purple-700 mt-0.5 whitespace-nowrap">
+                  <div className="text-[11px] font-semibold text-purple-700 mt-1 whitespace-nowrap">
                     EPADS · IES · HostelDesk
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
-              {/* Floating Card 2: Bottom-Left Stack Card (n8n, Python, Next.js, PostgreSQL) */}
-              <motion.div
-                animate={{
-                  y: [0, 8, 0],
-                }}
-                transition={{
-                  duration: 4.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-                className="absolute -bottom-4 -left-4 sm:-left-8 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 shadow-xl shadow-purple-900/10 border border-purple-100 flex flex-col gap-1.5 hover:shadow-2xl transition-shadow"
-              >
+              {/* Card B (Bottom-Left): Core stack with REAL logo tiles + '+' link to Skills */}
+              <div className="absolute -bottom-3 -left-3 sm:-left-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 shadow-lg shadow-purple-900/10 border border-purple-100 flex flex-col gap-1.5">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full">
                     Core Stack
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 pt-1">
-                  {/* n8n icon chip */}
-                  <div
-                    className="w-8 h-8 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 font-bold text-[10px]"
-                    title="n8n Automation"
-                  >
-                    n8n
-                  </div>
+                <div className="flex items-center gap-1.5 pt-0.5">
+                  <TechIcon name="Python" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="FastAPI" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="n8n" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="Next.js" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="PostgreSQL" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
+                  <TechIcon name="LangChain" variant="icon" size={17} showTooltip className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200" />
 
-                  {/* Python icon chip */}
-                  <div
-                    className="w-8 h-8 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-bold text-[10px]"
-                    title="Python"
-                  >
-                    Py
-                  </div>
-
-                  {/* Next.js icon chip */}
-                  <div
-                    className="w-8 h-8 rounded-full bg-zinc-100 border border-zinc-300 flex items-center justify-center text-zinc-900 font-bold text-[10px]"
-                    title="Next.js"
-                  >
-                    Next
-                  </div>
-
-                  {/* PostgreSQL icon chip */}
-                  <div
-                    className="w-8 h-8 rounded-full bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-700 font-bold text-[10px]"
-                    title="PostgreSQL"
-                  >
-                    SQL
-                  </div>
-
-                  {/* Purple plus badge */}
-                  <div
-                    className="w-8 h-8 rounded-full bg-[#7C3AED] text-white flex items-center justify-center font-bold text-xs shadow-md shadow-purple-500/30"
-                    title="More Tools"
+                  <Link
+                    href="#skills"
+                    className="w-7 h-7 rounded-lg bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center font-bold text-xs transition-colors focus-ring"
+                    title="View all skills"
+                    aria-label="View all skills"
                   >
                     +
+                  </Link>
+                </div>
+              </div>
+
+              {/* Card C (Tiny floating award): Claude Code in Action */}
+              <div className="absolute top-1/2 -left-4 sm:-left-8 -translate-y-1/2 z-20 bg-white/95 backdrop-blur-md rounded-xl p-2 shadow-md shadow-purple-900/10 border border-purple-100 flex items-center gap-2 max-w-[160px]">
+                <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0">
+                  <Award size={15} aria-hidden="true" />
+                </div>
+                <div className="leading-tight">
+                  <div className="text-[10px] font-bold text-zinc-900 truncate">
+                    Claude Code in Action
+                  </div>
+                  <div className="text-[9px] font-medium text-zinc-500 truncate">
+                    Anthropic Education
                   </div>
                 </div>
-              </motion.div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Proof Strip Directly Under Hero (4 compact items) */}
+        <div className="mt-14 pt-8 border-t border-purple-100">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {/* Proof Item 1: EPADS */}
+            <Link
+              href="#projects"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+            >
+              <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <ShieldCheck size={16} aria-hidden="true" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <div className="text-xs font-bold text-zinc-900 group-hover:text-purple-700 flex items-center gap-1 transition-colors">
+                  <span>EPADS Intelligence</span>
+                  <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <p className="text-[11px] text-zinc-600 line-clamp-2">
+                  Built for live Pakistan government bidding workflows
+                </p>
+              </div>
+            </Link>
+
+            {/* Proof Item 2: IES Group */}
+            <Link
+              href="#projects"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+            >
+              <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <Building2 size={16} aria-hidden="true" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <div className="text-xs font-bold text-zinc-900 group-hover:text-purple-700 flex items-center gap-1 transition-colors">
+                  <span>IES Group Platform</span>
+                  <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <p className="text-[11px] text-zinc-600 line-clamp-2">
+                  AI lead routing across four industrial engineering departments
+                </p>
+              </div>
+            </Link>
+
+            {/* Proof Item 3: HostelDesk */}
+            <Link
+              href="#projects"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+            >
+              <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <Workflow size={16} aria-hidden="true" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <div className="text-xs font-bold text-zinc-900 group-hover:text-purple-700 flex items-center gap-1 transition-colors">
+                  <span>HostelDesk System</span>
+                  <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <p className="text-[11px] text-zinc-600 line-clamp-2">
+                  Live full-stack complaint dispatch system on Next.js & n8n
+                </p>
+              </div>
+            </Link>
+
+            {/* Proof Item 4: Anthropic Education */}
+            <Link
+              href="#experience"
+              className="group flex items-start gap-3 p-3.5 rounded-xl bg-purple-50/60 hover:bg-purple-100/60 border border-purple-100 transition-all duration-200 focus-ring"
+            >
+              <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <Award size={16} aria-hidden="true" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <div className="text-xs font-bold text-zinc-900 group-hover:text-purple-700 flex items-center gap-1 transition-colors">
+                  <span>Anthropic Education</span>
+                  <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <p className="text-[11px] text-zinc-600 line-clamp-2">
+                  Claude Code in Action verified certificate
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        {/* "Tech I Ship With" Marquee */}
+        <div className="mt-10 pt-6 border-t border-purple-100/60">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 whitespace-nowrap shrink-0">
+              Tech I ship with:
+            </span>
+
+            {/* Infinite CSS Scroller Container */}
+            <div className="w-full overflow-hidden relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+              <div className="animate-marquee flex items-center gap-3">
+                {/* First sequence */}
+                {MARQUEE_TECH.map((tech) => (
+                  <TechIcon
+                    key={`m1-${tech}`}
+                    name={tech}
+                    variant="pill"
+                    size={16}
+                    showTooltip
+                  />
+                ))}
+                {/* Duplicated sequence marked aria-hidden */}
+                {MARQUEE_TECH.map((tech) => (
+                  <TechIcon
+                    key={`m2-${tech}`}
+                    name={tech}
+                    variant="pill"
+                    size={16}
+                    aria-hidden="true"
+                    className="select-none"
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
