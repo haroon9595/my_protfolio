@@ -21,6 +21,128 @@ function createMessageId(prefix: string): string {
   return `${prefix}-${msgIdCounter}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
+function renderInlineFormatting(text: string): React.ReactNode[] {
+  // Regex to match markdown links, bold, code, and italic
+  const pattern = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*([^*]+)\*\*|`([^`]+)`|\*([^*]+)\*)/g;
+  const elements: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      elements.push(text.substring(lastIndex, match.index));
+    }
+
+    if (match[2] && match[3]) {
+      elements.push(
+        <a
+          key={`link-${match.index}`}
+          href={match[3]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-semibold text-purple-600 hover:text-purple-800 transition-colors"
+        >
+          {match[2]}
+        </a>
+      );
+    } else if (match[4]) {
+      elements.push(
+        <strong key={`bold-${match.index}`} className="font-semibold text-zinc-900">
+          {match[4]}
+        </strong>
+      );
+    } else if (match[5]) {
+      elements.push(
+        <code
+          key={`code-${match.index}`}
+          className="px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 font-mono text-[11px] border border-purple-100"
+        >
+          {match[5]}
+        </code>
+      );
+    } else if (match[6]) {
+      elements.push(
+        <em key={`italic-${match.index}`} className="italic text-zinc-800">
+          {match[6]}
+        </em>
+      );
+    }
+
+    lastIndex = pattern.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    elements.push(text.substring(lastIndex));
+  }
+
+  return elements.length > 0 ? elements : [text];
+}
+
+function FormattedMessage({ content, isUser }: { content: string; isUser: boolean }) {
+  if (isUser) {
+    return <p className="whitespace-pre-wrap">{content}</p>;
+  }
+
+  const rawLines = content.replace(/\r\n/g, "\n").split("\n");
+  const blocks: React.ReactNode[] = [];
+  let currentList: string[] = [];
+
+  const flushList = (key: string) => {
+    if (currentList.length > 0) {
+      blocks.push(
+        <ul key={key} className="space-y-1.5 my-2 pl-0.5">
+          {currentList.map((item, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-zinc-700 text-xs sm:text-[13px] leading-relaxed">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 shrink-0" aria-hidden="true" />
+              <span className="flex-1">{renderInlineFormatting(item)}</span>
+            </li>
+          ))}
+        </ul>
+      );
+      currentList = [];
+    }
+  };
+
+  rawLines.forEach((line, i) => {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith("- ") || trimmed.startsWith("* ") || trimmed.startsWith("• ")) {
+      const itemText = trimmed.replace(/^[-*•]\s+/, "");
+      currentList.push(itemText);
+    } else {
+      flushList(`list-before-${i}`);
+
+      if (!trimmed) {
+        return;
+      }
+
+      if (trimmed.startsWith("### ")) {
+        blocks.push(
+          <h4 key={`h-${i}`} className="font-bold text-zinc-900 mt-2 mb-1 text-[13px] sm:text-sm">
+            {renderInlineFormatting(trimmed.replace(/^###\s+/, ""))}
+          </h4>
+        );
+      } else if (trimmed.startsWith("**") && trimmed.endsWith("**") && !trimmed.slice(2, -2).includes("**")) {
+        blocks.push(
+          <h4 key={`h-${i}`} className="font-bold text-purple-900 mt-2.5 mb-1 text-xs sm:text-[13px] uppercase tracking-wide">
+            {trimmed.slice(2, -2)}
+          </h4>
+        );
+      } else {
+        blocks.push(
+          <p key={`p-${i}`} className="leading-relaxed my-1.5 text-zinc-700 text-xs sm:text-[13px]">
+            {renderInlineFormatting(trimmed)}
+          </p>
+        );
+      }
+    }
+  });
+
+  flushList("list-final");
+
+  return <div className="space-y-1">{blocks}</div>;
+}
+
 const SUGGESTED_PROMPTS = [
   "What systems has Haroon built?",
   "Tell me about the EPADS Tender Intelligence system",
@@ -250,13 +372,13 @@ export default function AIChatbot() {
                   }`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed shadow-xs ${
+                    className={`max-w-[88%] sm:max-w-[85%] rounded-2xl px-4 py-3 leading-relaxed shadow-xs ${
                       m.role === "user"
-                        ? "bg-purple-600 text-white rounded-br-xs"
+                        ? "bg-purple-600 text-white rounded-br-xs font-medium text-xs sm:text-sm"
                         : "bg-white text-zinc-800 border border-purple-100 rounded-bl-xs"
                     }`}
                   >
-                    {m.content}
+                    <FormattedMessage content={m.content} isUser={m.role === "user"} />
                   </div>
                 </div>
               ))}
