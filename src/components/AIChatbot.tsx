@@ -169,10 +169,10 @@ export default function AIChatbot() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 relative cursor-pointer ${
+          className={`w-14 h-14 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center shadow-xl transition-all duration-300 relative cursor-pointer focus-ring ${
             isOpen
               ? "bg-zinc-900 text-white shadow-zinc-900/30"
-              : "bg-gradient-to-tr from-[#7C3AED] to-[#9333EA] text-white shadow-purple-600/35 hover:shadow-purple-600/50"
+              : "bg-gradient-to-tr from-purple-600 to-purple-700 text-white shadow-purple-600/35 hover:shadow-purple-600/50"
           }`}
           aria-label={isOpen ? "Close AI Assistant" : "Open AI Assistant"}
         >

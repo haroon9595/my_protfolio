@@ -159,7 +159,7 @@ export const portfolioData = {
       title: "Data Collection & Intelligence Systems",
       description:
         "Crawlers, parsers, change detection, daily digests and structured report exports.",
-      tech: ["Python", "SQLite", "Excel/PDF/Word exports", "Schedulers"],
+      tech: ["Crawlers", "Parsers", "SQLite", "Excel/PDF/Word exports"],
       icon: "database",
     },
   ] as ServiceItem[],
