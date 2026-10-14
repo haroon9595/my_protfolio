@@ -1,89 +1,99 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
+import Section from "@/components/Section";
+import TechIcon from "@/components/TechIcon";
 import {
   Code2,
   Server,
-  Bot,
-  Layout,
+  Brain,
+  Cpu,
   Database,
+  Layout,
+  Wrench,
 } from "lucide-react";
 
 export default function Skills() {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "Languages":
-        return <Code2 size={18} className="text-[#7C3AED]" />;
+        return <Code2 size={20} className="text-purple-400" aria-hidden="true" />;
       case "Backend & Automation":
-        return <Server size={18} className="text-[#7C3AED]" />;
-      case "AI & Machine Learning":
-        return <Bot size={18} className="text-[#7C3AED]" />;
+        return <Server size={20} className="text-purple-400" aria-hidden="true" />;
+      case "AI & Generative AI":
+        return <Brain size={20} className="text-purple-400" aria-hidden="true" />;
+      case "Machine Learning & Data":
+        return <Cpu size={20} className="text-purple-400" aria-hidden="true" />;
+      case "Databases":
+        return <Database size={20} className="text-purple-400" aria-hidden="true" />;
       case "Frontend":
-        return <Layout size={18} className="text-[#7C3AED]" />;
-      case "Data & Tools":
-        return <Database size={18} className="text-[#7C3AED]" />;
+        return <Layout size={20} className="text-purple-400" aria-hidden="true" />;
+      case "Dev Tools & Platforms":
+        return <Wrench size={20} className="text-purple-400" aria-hidden="true" />;
       default:
-        return <Code2 size={18} className="text-[#7C3AED]" />;
+        return <Code2 size={20} className="text-purple-400" aria-hidden="true" />;
     }
   };
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-purple-100/70 text-[#7C3AED] text-xs font-bold uppercase tracking-wider">
-            Technical Repertoire
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F0F14] tracking-tight">
-            Skills & Core Tooling
-          </h2>
-          <p className="text-base text-zinc-600 max-w-xl mx-auto">
-            Practical competencies utilized in shipping real-world architectures
-            and autonomous systems.
-          </p>
-          <div className="w-12 h-1 bg-[#7C3AED] rounded-full mx-auto mt-2" />
-        </div>
+    <Section
+      id="skills"
+      eyebrow="Technical Stack"
+      title="Skills & Engineering Tooling"
+      subtitle="Real technology brand logos and tools used in shipping real-world architectures, autonomous agents, and data systems."
+      variant="dark"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {portfolioData.skills.map((categoryGroup, index) => {
+          const isFullSpan = index === portfolioData.skills.length - 1; // Last card (Dev Tools) spans 3 columns
 
-        {/* Skills Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {portfolioData.skills.map((categoryGroup, index) => (
-            <motion.div
+          return (
+            <div
               key={categoryGroup.category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="bg-[#FAF9FF] rounded-3xl p-6 sm:p-7 border border-purple-100/80 hover:border-[#7C3AED]/40 hover:shadow-lg hover:shadow-purple-500/5 transition-all flex flex-col justify-between"
+              className={`glass-panel-dark rounded-2xl p-5 sm:p-6 border border-[#282046] hover:border-purple-500/50 hover:shadow-purple-glow transition-all duration-300 flex flex-col justify-between ${
+                isFullSpan ? "lg:col-span-3" : ""
+              }`}
             >
               <div>
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-purple-100 flex items-center justify-center shadow-xs">
+                {/* Category Header */}
+                <div className="flex items-center gap-3 mb-5 pb-3 border-b border-[#241A40]">
+                  <div className="w-10 h-10 rounded-xl bg-purple-950/70 border border-purple-800/40 flex items-center justify-center shadow-xs shrink-0">
                     {getCategoryIcon(categoryGroup.category)}
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-[#0F0F14] tracking-tight">
-                    {categoryGroup.category}
-                  </h3>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                      {categoryGroup.category}
+                    </h3>
+                    <span className="text-xs text-purple-300/70">
+                      {categoryGroup.skills.length} core technologies
+                    </span>
+                  </div>
                 </div>
 
-                {/* Chips */}
-                <div className="flex flex-wrap gap-2 pt-1">
+                {/* Grid of Real Brand Logo Tiles */}
+                <div
+                  className={`grid gap-2.5 sm:gap-3 ${
+                    isFullSpan
+                      ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-6"
+                      : "grid-cols-3 sm:grid-cols-3"
+                  }`}
+                >
                   {categoryGroup.skills.map((skill) => (
-                    <span
+                    <TechIcon
                       key={skill}
-                      className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-purple-100 hover:border-[#7C3AED]/50 text-zinc-800 hover:text-[#7C3AED] shadow-2xs hover:shadow-xs transition-all duration-150 cursor-default"
-                    >
-                      {skill}
-                    </span>
+                      name={skill}
+                      variant="tile"
+                      theme="dark"
+                      size={28}
+                      showTooltip
+                    />
                   ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }

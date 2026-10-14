@@ -74,6 +74,8 @@ export const TECH_REGISTRY: Record<string, IconKind> = {
   Embeddings: { type: "lucide", icon: "layers", color: "#3B82F6" },
   "AI Integrations": { type: "lucide", icon: "sparkles", color: "#F59E0B" },
   "LLM Agents and Tool Calling": { type: "lucide", icon: "bot", color: "#10B981" },
+  "LLM Agents": { type: "lucide", icon: "bot", color: "#10B981" },
+  "Tool Calling": { type: "lucide", icon: "bot", color: "#10B981" },
   RAG: { type: "lucide", icon: "search", color: "#6366F1" },
   "Prompt Engineering": { type: "lucide", icon: "terminal", color: "#EC4899" },
 
@@ -82,6 +84,7 @@ export const TECH_REGISTRY: Record<string, IconKind> = {
   Pandas: { type: "simple", data: siPandas, brandHex: "#150458" },
   NumPy: { type: "simple", data: siNumpy, brandHex: "#013243" },
   "Machine Learning": { type: "lucide", icon: "cpu", color: "#8B5CF6" },
+  "Computer Vision": { type: "lucide", icon: "cpu", color: "#8B5CF6" },
   EDA: { type: "lucide", icon: "line-chart", color: "#06B6D4" },
   Matplotlib: { type: "lucide", icon: "bar-chart", color: "#11557C" },
   Seaborn: { type: "lucide", icon: "trending-up", color: "#3776AB" },

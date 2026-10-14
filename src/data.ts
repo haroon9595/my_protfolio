@@ -376,7 +376,7 @@ export const portfolioData = {
     {
       category: "Languages",
       icon: "code",
-      skills: ["Python", "SQL", "C++", "C#", "HTML", "CSS"],
+      skills: ["Python", "JavaScript", "SQL", "C++", "C#", "HTML", "CSS"],
     },
     {
       category: "Backend & Automation",
