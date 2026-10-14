@@ -90,10 +90,16 @@ export default function Skills() {
                       {getCategoryIcon(categoryGroup.category)}
                     </div>
                     <div>
-                      <h3 className="text-base sm:text-lg font-bold text-white tracking-tight leading-tight">
+                      <h3
+                        className="text-base sm:text-lg font-bold !text-white text-white tracking-tight leading-tight"
+                        style={{ color: "#ffffff" }}
+                      >
                         {categoryGroup.category}
                       </h3>
-                      <span className="text-xs text-purple-200/80 font-medium">
+                      <span
+                        className="text-xs text-purple-200/90 font-medium"
+                        style={{ color: "#e9d5ff" }}
+                      >
                         {categoryGroup.skills.length} core technologies
                       </span>
                     </div>

@@ -34,7 +34,7 @@ export default function Section({
   const titleStyles = {
     white: "text-[#0F0F14]",
     tint: "text-[#0F0F14]",
-    dark: "text-white",
+    dark: "!text-white text-white",
   }[variant];
 
   const subtitleStyles = {
